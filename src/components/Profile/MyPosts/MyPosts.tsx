@@ -1,9 +1,16 @@
 import React from 'react';
 import Post from './Post/Post';
 import s from './MyPosts.module.css'
+import {PostObjType} from "../../../index";
+
 //  Компонента для профиля, затем импортируется в  App
 
-const MyPosts = () => {
+type MyPostsPropsType = {
+    posts:Array<PostObjType>
+}
+
+const MyPosts = (props: MyPostsPropsType) => {
+    let postsElements = props.posts && props.posts.map(p => <Post message={p.post} likesCount={p.likesCount}/>)
     return (
         <div className={s.postsBlock}>
             <h3>My posts</h3>
@@ -16,12 +23,7 @@ const MyPosts = () => {
                 </div>
             </div>
             <div className={s.posts}>
-                <Post message="Hi, how are you?" likesCount="23"/>
-                <Post message="It's my first post" likesCount="89"/>
-                <Post/>
-                <Post/>
-                <Post/>
-                <Post/>
+                {postsElements}
             </div>
         </div>
     )
