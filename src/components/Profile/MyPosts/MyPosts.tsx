@@ -1,16 +1,16 @@
 import React from 'react';
 import Post from './Post/Post';
 import s from './MyPosts.module.css'
-import {PostObjType} from "../../../index";
+import {PostObjType} from "../../../redux/state";
 
 //  Компонента для профиля, затем импортируется в  App
 
 type MyPostsPropsType = {
-    posts:Array<PostObjType>
+    posts: Array<PostObjType>
 }
 
 const MyPosts = (props: MyPostsPropsType) => {
-    let postsElements = props.posts && props.posts.map(p => <Post message={p.post} likesCount={p.likesCount}/>)
+    let postsElements = props.posts.map(p => <Post message={p.post} likesCount={p.likesCount}/>)
     return (
         <div className={s.postsBlock}>
             <h3>My posts</h3>
