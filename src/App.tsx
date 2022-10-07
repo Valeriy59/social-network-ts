@@ -8,7 +8,7 @@ import Music from './components/Music/Music';
 import News from './components/News/News';
 import Settings from './components/Settings/Settings';
 import {BrowserRouter, Route} from 'react-router-dom';
-import {dialogsPageType, ProfilePageType} from "./redux/state";
+import {addPost, DialogsPageType, ProfilePageType} from "./redux/state";
 
 // export type AppPropsType = {
 //     posts:Array<PostObjType>
@@ -17,13 +17,15 @@ import {dialogsPageType, ProfilePageType} from "./redux/state";
 // }
 type StatePropsType = {
     state: StateType
+    addPost: (postMessage: string) => void
 }
 
 type StateType = {
     profilePage: ProfilePageType
-    dialogsPage: dialogsPageType
+    dialogsPage: DialogsPageType
 }
 
+// Роут компонента отвечает за строку браузера, запускает рендер в зависимотси от пас
 const App = (props:StatePropsType) => {
 
   return (
@@ -32,7 +34,7 @@ const App = (props:StatePropsType) => {
           <Header />
           <Nav />
           <div className='app-wrapper-content'>
-              <Route path="/profile" render ={() => <Profile state={props.state.profilePage}/>} />
+              <Route path="/profile" render ={() => <Profile state={props.state.profilePage} addPost={props.addPost}/>} />
               <Route path="/dialogs" render ={() => <Dialogs state={props.state.dialogsPage} />} />
               <Route path="/settings" render ={() => <Settings />} />
               <Route path="/music" render ={() => <Music />} />

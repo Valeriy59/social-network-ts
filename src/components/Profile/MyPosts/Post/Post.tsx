@@ -2,6 +2,10 @@ import React from 'react';
 import classes from './Post.module.css'
 //  Компонента для профиля, затем импортируется в  App
 
+type PostPropsType = {
+
+}
+
 const Post = (props: any) => {
     return (
         <div className={classes.item}>

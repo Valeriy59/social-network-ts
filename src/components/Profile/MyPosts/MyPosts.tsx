@@ -7,19 +7,29 @@ import {PostObjType} from "../../../redux/state";
 
 type MyPostsPropsType = {
     posts: Array<PostObjType>
+    addPost: (postMessage: string | undefined) => void  // need to fix any
 }
 
 const MyPosts = (props: MyPostsPropsType) => {
     let postsElements = props.posts.map(p => <Post message={p.post} likesCount={p.likesCount}/>)
+    // создается ссылка
+    let newPostElement = React.createRef<HTMLTextAreaElement>()
+
+    //это колбэк функция она отдается кнопке на событие онклик, а онклик ее вызовет
+    let addPost = () => {
+        debugger
+        props.addPost(newPostElement.current?.value)
+    }
+
     return (
         <div className={s.postsBlock}>
             <h3>My posts</h3>
             <div>
                 <div>
-                    <textarea></textarea>
+                    <textarea ref={newPostElement}></textarea>
                 </div>
                 <div>
-                    <button>Add post</button>
+                    <button onClick={addPost}>Add post</button>
                 </div>
             </div>
             <div className={s.posts}>

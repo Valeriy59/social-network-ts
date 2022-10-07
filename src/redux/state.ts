@@ -1,6 +1,6 @@
 export type PostObjType = {
     id: number
-    post: string
+    post: string | null
     likesCount: number
 }
 
@@ -18,12 +18,23 @@ export type ProfilePageType = {
     posts: Array<PostObjType>
 }
 
-export type dialogsPageType = {
+export type DialogsPageType = {
     messages: Array<MessagesObjType>
     dialogs: Array<DialogsObjType>
 }
 
-let state = {
+export type SideBarType = {
+
+}
+
+export type RootStateType = {
+    profilePage: ProfilePageType
+    dialogsPage: DialogsPageType
+    sidebar: SideBarType
+}
+
+// каждый компонент будет отрисовываеться отдельной веткой большого обьекта стэйт
+let state: RootStateType = {
     profilePage: {
         posts: [
             { id: 1, post: 'Hi, how are you?', likesCount: 12 },
@@ -52,7 +63,21 @@ let state = {
             { id: 5, message: 'yo' },
             { id: 6, message: 'yo' }
         ]
+    },
+    sidebar: {
+
     }
+}
+
+export let addPost = (postMessage: string | null) => {
+    debugger
+    let newPost: PostObjType = {
+        id: 5,
+        post: postMessage,
+        likesCount: 0
+    }
+    state.profilePage.posts.push(newPost)
+
 }
 
 export default state
