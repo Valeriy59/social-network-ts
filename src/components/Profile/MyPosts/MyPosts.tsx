@@ -7,7 +7,7 @@ import {PostObjType} from "../../../redux/state";
 
 type MyPostsPropsType = {
     posts: Array<PostObjType>
-    addPost: (postMessage: string | null) => void  // need to fix any
+    addPost: (postMessage: string) => void  // need to fix any
 }
 
 const MyPosts = (props: MyPostsPropsType) => {
@@ -18,8 +18,10 @@ const MyPosts = (props: MyPostsPropsType) => {
     //это колбэк функция она отдается кнопке на событие онклик, а онклик ее вызовет
     let addPost = () => {
         debugger
-        props.addPost(newPostElement.current?.value)
-        newPostElement.current?.value = ''
+        if (newPostElement.current) {
+            props.addPost(newPostElement.current?.value)
+            newPostElement.current.value = ''
+        }
     }
 
     return (

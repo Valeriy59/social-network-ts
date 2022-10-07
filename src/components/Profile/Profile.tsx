@@ -8,7 +8,7 @@ import {PostObjType} from "../../redux/state";
 
 type ProfilePropsType = {
     state: ProfileType
-    addPost: (postMessage: string | undefined) => void
+    addPost: (postMessage: string) => void
 }
 
 type ProfileType = {
