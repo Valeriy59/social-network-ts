@@ -7,7 +7,7 @@ import {PostObjType} from "../../../redux/state";
 
 type MyPostsPropsType = {
     posts: Array<PostObjType>
-    addPost: (postMessage: string | undefined) => void  // need to fix any
+    addPost: (postMessage: string | null) => void  // need to fix any
 }
 
 const MyPosts = (props: MyPostsPropsType) => {
@@ -19,6 +19,7 @@ const MyPosts = (props: MyPostsPropsType) => {
     let addPost = () => {
         debugger
         props.addPost(newPostElement.current?.value)
+        newPostElement.current?.value = ''
     }
 
     return (
