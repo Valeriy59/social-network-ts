@@ -7,12 +7,15 @@ import {PostObjType} from "../../redux/state";
 //  Компонента для профиля, затем импортируется в  App
 
 type ProfilePropsType = {
-    state: ProfileType
-    addPost: (postMessage: string) => void
+    profilePage: ProfileType
+    addPost: () => void
+    updateNewPostText: (newPostText: string) => void
+    newPostText: string
 }
 
 type ProfileType = {
     posts:Array<PostObjType>
+    newPostText: string
 }
 
 
@@ -22,7 +25,11 @@ const Profile = (props: ProfilePropsType) => {
     return (
         <div className={s.content}>
             <ProfileInfo />
-            <MyPosts posts={props.state.posts} addPost={props.addPost}/>
+            <MyPosts
+                posts={props.profilePage.posts}
+                newPostText={props.profilePage.newPostText}
+                updateNewPostText={props.updateNewPostText}
+                addPost={props.addPost}/>
         </div>
     )
 }

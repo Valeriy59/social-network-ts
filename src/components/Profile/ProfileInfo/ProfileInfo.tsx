@@ -9,7 +9,7 @@ const ProfileInfo = (props: ProfileInfoType) => {
     return (
         <div>
             <div>
-                <img src="http://skalsa.ru/images/bt_property/91/3.jpg"></img>
+                {/*<img src="http://skalsa.ru/images/bt_property/91/3.jpg"></img>*/}
             </div>
             <div className={s.descriptionBlock}>
                 ava + desc
