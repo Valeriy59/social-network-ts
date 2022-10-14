@@ -8,7 +8,7 @@ import Music from './components/Music/Music';
 import News from './components/News/News';
 import Settings from './components/Settings/Settings';
 import {BrowserRouter, Route} from 'react-router-dom';
-import {addPost, DialogsPageType, ProfilePageType, updateNewPostText} from "./redux/state";
+import {StoreType} from "./redux/state";
 
 // export type AppPropsType = {
 //     posts:Array<PostObjType>
@@ -16,27 +16,26 @@ import {addPost, DialogsPageType, ProfilePageType, updateNewPostText} from "./re
 //     messages: Array<MessagesObjType>
 // }
 type StatePropsType = {
-    state: StateType
-    addPost: () => void
-    updateNewPostText: (newPostText: string) => void
+    store: StoreType
 }
-
-type StateType = {
-    profilePage: ProfilePageType
-    dialogsPage: DialogsPageType
-}
-
 // Роут компонента отвечает за строку браузера, запускает рендер в зависимотси от пас
 const App = (props:StatePropsType) => {
-
+const state = props.store.getState()
   return (
       <BrowserRouter>
         <div className='app-wrapper'>
           <Header />
           <Nav />
           <div className='app-wrapper-content'>
-              <Route path="/profile" render ={() => <Profile profilePage={props.state.profilePage} addPost={props.addPost} newPostText={props.state.profilePage.newPostText} updateNewPostText={props.updateNewPostText}/>} />
-              <Route path="/dialogs" render ={() => <Dialogs state={props.state.dialogsPage} />} />
+              <Route path="/profile" render ={() => <Profile
+                  profilePage={state.profilePage}
+                  addPost={props.store.addPost.bind(props.store)}
+                  newPostText={state.profilePage.newPostText}
+                  updateNewPostText={props.store.updateNewPostText.bind(props.store)}/>}
+              />
+              <Route path="/dialogs" render ={() => <Dialogs
+                  state={state.dialogsPage} />}
+              />
               <Route path="/settings" render ={() => <Settings />} />
               <Route path="/music" render ={() => <Music />} />
               <Route path="/news" render ={() => <News />} />
