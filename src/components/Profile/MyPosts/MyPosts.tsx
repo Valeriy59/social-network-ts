@@ -1,7 +1,7 @@
 import React from 'react';
 import Post from './Post/Post';
 import s from './MyPosts.module.css'
-import {ActionsTypes, PostObjType} from "../../../redux/state";
+import {ActionsTypes, addPostActionCreator, PostObjType, updateNewPostTextActionCreator} from "../../../redux/state";
 
 //  Компонента для профиля, затем импортируется в  App
 
@@ -19,13 +19,13 @@ const MyPosts = (props: MyPostsPropsType) => {
     //это колбэк функция она отдается кнопке на событие онклик, а онклик ее вызовет
     let addPost = () => {
         if (newPostElement.current) {
-            props.dispatch({type:"ADD POST", postText: newPostElement.current.value})
+            props.dispatch(addPostActionCreator(newPostElement.current.value))
         }
     }
 
     let onPostChange = () => {
         if (newPostElement.current) {
-            props.dispatch({type: "UPDATE NEW POST TEXT", newText: newPostElement.current?.value})
+            props.dispatch(updateNewPostTextActionCreator(newPostElement.current?.value))
         }
     }
 
