@@ -1,3 +1,4 @@
+import actions from "redux-form/lib/actions";
 
 let rerenderEntireTree = () => {
     console.log('State was changed')
@@ -43,13 +44,22 @@ export type RootStateType = {
 
 export type StoreType = {
     _state: RootStateType
-    updateNewPostText: (newText: string) => void
-    addPost: () => void
     _callSubscriber: (state: RootStateType) => void
     subscribe: (observer:() => void) => void
     getState:() => RootStateType
-
+    dispatch: (action: ActionsTypes) => void
 }
+
+type AddPostActionType = {
+    type: "ADD POST"
+    postText: string
+}
+type UpdateNewPostTextActionType = {
+    type: "UPDATE NEW POST TEXT"
+    newText: string
+}
+
+export type ActionsTypes = AddPostActionType | UpdateNewPostTextActionType
 
 export let store: StoreType = {
     _state: {
@@ -90,25 +100,26 @@ export let store: StoreType = {
     _callSubscriber() {
         console.log('State was changed')
     },
-    updateNewPostText(newText: string) {
-        this._state.profilePage.newPostText = newText
-        this._callSubscriber(this._state)
-    },
     subscribe(observer) {
         this._callSubscriber = observer
     },
-    addPost() {
-        let newPost: PostObjType = {
-            id: 5,
-            post: this._state.profilePage.newPostText,
-            likesCount: 0
-        }
-        this._state.profilePage.posts.push(newPost)
-        this._state.profilePage.newPostText = ''
-        this._callSubscriber(this._state)
-    },
     getState() {
         return this._state
+    },
+    dispatch(action){
+        if (action.type === "ADD POST") {
+            let newPost: PostObjType = {
+                id: new Date().getTime(),
+                post: action.postText,
+                likesCount: 0
+            }
+            this._state.profilePage.posts.push(newPost)
+            this._state.profilePage.newPostText = ''
+            this._callSubscriber(this._state)
+        } else if (action.type === "UPDATE NEW POST TEXT") {
+            this._state.profilePage.newPostText = action.newText
+            this._callSubscriber(this._state)
+        }
     }
 }
 

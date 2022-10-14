@@ -3,14 +3,13 @@ import s from './Profile.module.css'
 import MyPosts from './MyPosts/MyPosts';
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import {} from "../../index";
-import {PostObjType} from "../../redux/state";
+import {ActionsTypes, PostObjType} from "../../redux/state";
 //  Компонента для профиля, затем импортируется в  App
 
 type ProfilePropsType = {
     profilePage: ProfileType
-    addPost: () => void
-    updateNewPostText: (newPostText: string) => void
     newPostText: string
+    dispatch: (action: ActionsTypes) => void
 }
 
 type ProfileType = {
@@ -28,8 +27,8 @@ const Profile = (props: ProfilePropsType) => {
             <MyPosts
                 posts={props.profilePage.posts}
                 newPostText={props.profilePage.newPostText}
-                updateNewPostText={props.updateNewPostText}
-                addPost={props.addPost}/>
+                dispatch={props.dispatch}
+            />
         </div>
     )
 }

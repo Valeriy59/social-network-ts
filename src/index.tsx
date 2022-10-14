@@ -12,7 +12,7 @@ let rerenderEntireTree = () => {
     //находим элемент рут и отрисовываем Апп
     ReactDOM.render(
         <BrowserRouter>
-            <App store={store}/>
+            <App store={store} dispatch={store.dispatch.bind(store)}/>
         </BrowserRouter>,  document.getElementById('root'));
 }
 
