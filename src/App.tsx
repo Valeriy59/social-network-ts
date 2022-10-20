@@ -34,7 +34,8 @@ const App = (props: StatePropsType) => {
                         dispatch={props.store.dispatch}/>}
                     />
                     <Route path="/dialogs" render={() => <Dialogs
-                        state={state.dialogsPage}/>}
+                        store={props.store}
+                    />}
                     />
                     <Route path="/settings" render={() => <Settings/>}/>
                     <Route path="/music" render={() => <Music/>}/>

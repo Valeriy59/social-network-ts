@@ -1,7 +1,8 @@
-import actions from "redux-form/lib/actions";
-
-const UPDATE_NEW_POST_TEX = "UPDATE NEW POST TEXT"
+const UPDATE_NEW_POST_TEXT = "UPDATE NEW POST TEXT"
 const ADD_POST = "ADD POST"
+const UPDATE_NEW_MESSAGE_BODY = "UPDATE NEW MESSAGE BODY"
+const SEND_MESSAGE = "SEND MESSAGE"
+
 
 let rerenderEntireTree = () => {
     console.log('State was changed')
@@ -31,6 +32,7 @@ export type ProfilePageType = {
 export type DialogsPageType = {
     messages: Array<MessagesObjType>
     dialogs: Array<DialogsObjType>
+    newMessageBody: string
 }
 
 export type SideBarType = {}
@@ -59,26 +61,39 @@ type UpdateNewPostTextActionType = {
     type: "UPDATE NEW POST TEXT"
     newText: string
 }
+type UpdateNewMessageBodyActionType = {
+    type: "UPDATE NEW MESSAGE BODY"
+    body: string
+}
+type SendMessageActionType = {
+    type: "SEND MESSAGE"
+}
 
-export type ActionsTypes = AddPostActionType | UpdateNewPostTextActionType
+export type ActionsTypes = AddPostActionType | UpdateNewPostTextActionType | UpdateNewMessageBodyActionType | SendMessageActionType
 
 export const addPostActionCreator = (postText: string): AddPostActionType => (
     {
         type: ADD_POST,
         postText: postText
     }
-
 )
-
-
 export const updateNewPostTextActionCreator = (newText: string): UpdateNewPostTextActionType => (
     {
-        type: UPDATE_NEW_POST_TEX,
+        type: UPDATE_NEW_POST_TEXT,
         newText: newText
     }
 )
-
-
+export const sendMessageActionCreator = (): SendMessageActionType => (
+    {
+        type: SEND_MESSAGE
+    }
+)
+export const updateNewMessageBodyActionCreator = (newMessageBody: string): UpdateNewMessageBodyActionType => (
+    {
+        type: UPDATE_NEW_MESSAGE_BODY,
+        body: newMessageBody
+    }
+)
 export let store: StoreType = {
     _state: {
         profilePage: {
@@ -109,7 +124,8 @@ export let store: StoreType = {
                 {id: 4, message: 'yo'},
                 {id: 5, message: 'yo'},
                 {id: 6, message: 'yo'}
-            ]
+            ],
+            newMessageBody: ''
         },
         sidebar: {}
     },
@@ -122,8 +138,8 @@ export let store: StoreType = {
     getState() {
         return this._state
     },
-    dispatch(action) {
-        if (action.type === "ADD POST") {
+    dispatch(action:ActionsTypes) {
+        if (action.type === ADD_POST) {
             let newPost: PostObjType = {
                 id: new Date().getTime(),
                 post: action.postText,
@@ -132,8 +148,16 @@ export let store: StoreType = {
             this._state.profilePage.posts.push(newPost)
             this._state.profilePage.newPostText = ''
             this._callSubscriber(this._state)
-        } else if (action.type === "UPDATE NEW POST TEXT") {
+        } else if (action.type === UPDATE_NEW_POST_TEXT) {
             this._state.profilePage.newPostText = action.newText
+            this._callSubscriber(this._state)
+        } else if (action.type === UPDATE_NEW_MESSAGE_BODY) {
+            this._state.dialogsPage.newMessageBody = action.body
+            this._callSubscriber(this._state)
+        } else if (action.type === SEND_MESSAGE) {
+            let body = this._state.dialogsPage.newMessageBody
+            this._state.dialogsPage.newMessageBody = ''
+            this._state.dialogsPage.messages.push({id: 6, message: body})
             this._callSubscriber(this._state)
         }
     }
