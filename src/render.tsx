@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom'
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import {store} from "./redux/state";
+
 import {BrowserRouter} from "react-router-dom";
+import store from "./redux/redux-store";
 
 //перерисовка всего дерева для отображения нового поста
 export let rerenderEntireTree = () => {

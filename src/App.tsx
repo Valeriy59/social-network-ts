@@ -3,12 +3,13 @@ import './App.css';
 import Header from './components/Header/Header';
 import Nav from './components/Nav/Nav';
 import Profile from './components/Profile/Profile';
-import Dialogs from './components/Dialogs/Dialogs';
 import Music from './components/Music/Music';
 import News from './components/News/News';
 import Settings from './components/Settings/Settings';
 import {BrowserRouter, Route} from 'react-router-dom';
 import {ActionsTypes, StoreType} from "./redux/state";
+import DialogsContainer from "./components/Dialogs/DialogsContainer";
+import {Store} from "redux";
 
 // export type AppPropsType = {
 //     posts:Array<PostObjType>
@@ -16,7 +17,7 @@ import {ActionsTypes, StoreType} from "./redux/state";
 //     messages: Array<MessagesObjType>
 // }
 type StatePropsType = {
-    store: StoreType
+    store: Store
     dispatch: (action: ActionsTypes) => void
 }
 // Роут компонента отвечает за строку браузера, запускает рендер в зависимотси от пас
@@ -29,11 +30,9 @@ const App = (props: StatePropsType) => {
                 <Nav/>
                 <div className='app-wrapper-content'>
                     <Route path="/profile" render={() => <Profile
-                        profilePage={state.profilePage}
-                        newPostText={state.profilePage.newPostText}
-                        dispatch={props.store.dispatch}/>}
+                        store={props.store}/>}
                     />
-                    <Route path="/dialogs" render={() => <Dialogs
+                    <Route path="/dialogs" render={() => <DialogsContainer
                         store={props.store}
                     />}
                     />

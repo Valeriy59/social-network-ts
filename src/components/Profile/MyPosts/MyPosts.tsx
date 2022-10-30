@@ -1,16 +1,16 @@
 import React from 'react';
 import Post from './Post/Post';
 import s from './MyPosts.module.css'
-import {addPostActionCreator, updateNewPostTextActionCreator} from "../../../redux/profile-reducer";
 import {PostObjType} from "../../../redux/state";
-import {ActionsTypes} from "../../../redux/state";
+
 
 //  Компонента для профиля, затем импортируется в  App
 
 type MyPostsPropsType = {
     posts: Array<PostObjType>
     newPostText: string
-    dispatch: (action: ActionsTypes) => void
+    addPost: (postText: string) => void
+    updateNewPostText: (text: string) => void
 }
 
 const MyPosts = (props: MyPostsPropsType) => {
@@ -19,15 +19,17 @@ const MyPosts = (props: MyPostsPropsType) => {
     let newPostElement = React.createRef<HTMLTextAreaElement>()
 
     //это колбэк функция она отдается кнопке на событие онклик, а онклик ее вызовет
-    let addPost = () => {
+    let onAddPost = () => {
         if (newPostElement.current) {
-            props.dispatch(addPostActionCreator(newPostElement.current.value))
+            props.addPost(newPostElement.current.value)
+            // props.dispatch(addPostActionCreator(newPostElement.current.value))
         }
     }
 
     let onPostChange = () => {
         if (newPostElement.current) {
-            props.dispatch(updateNewPostTextActionCreator(newPostElement.current?.value))
+            props.updateNewPostText(newPostElement.current?.value)
+            // props.dispatch(updateNewPostTextActionCreator(newPostElement.current?.value))
         }
     }
 
@@ -39,7 +41,7 @@ const MyPosts = (props: MyPostsPropsType) => {
                     <textarea ref={newPostElement} onChange={onPostChange} value={props.newPostText}></textarea>
                 </div>
                 <div>
-                    <button onClick={addPost}>Add post</button>
+                    <button onClick={onAddPost}>Add post</button>
                 </div>
             </div>
             <div className={s.posts}>
