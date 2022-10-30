@@ -98,10 +98,10 @@ export let store: StoreType = {
     getState() {
         return this._state
     },
-    dispatch(action:ActionsTypes) {
-        this._state.profilePage = profileReducer(this._state.profilePage, action)
-        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
-        this._state.sidebar = sideBarReducer(this._state.sidebar, action)
+    dispatch(action) {
+        this._state.profilePage = profileReducer(this._state.profilePage, <AddPostActionType | UpdateNewPostTextActionType>action)
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, <UpdateNewMessageBodyActionType | SendMessageActionType>action)
+        this._state.sidebar = sideBarReducer(this._state.sidebar, <AddPostActionType>action)
         this._callSubscriber(this._state)
     }
 }

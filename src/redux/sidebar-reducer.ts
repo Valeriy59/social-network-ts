@@ -1,9 +1,12 @@
 import {SideBarType} from "./state";
+import {AddPostActionType, UpdateNewPostTextActionType} from "./profile-reducer";
 
 let initialState: SideBarType = {
 
 }
 
-export const sideBarReducer = (state: SideBarType = initialState, action) => {
+type ActionsTypes = AddPostActionType
+
+export const sideBarReducer = (state: SideBarType = initialState, action: ActionsTypes) => {
     return state
 }

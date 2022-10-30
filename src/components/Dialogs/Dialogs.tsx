@@ -2,13 +2,9 @@ import React, {ChangeEvent, ChangeEventHandler} from 'react';
 import s from './Dialogs.module.css'
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-import {
-    DialogsObjType,
-    MessagesObjType,
-    sendMessageActionCreator,
-    StoreType,
-    updateNewMessageBodyActionCreator
-} from "../../redux/state";
+import {StoreType} from "../../redux/state";
+import {sendMessageActionCreator, updateNewMessageBodyActionCreator} from "../../redux/dialogs-reducer";
+
 
 //  Компонента для диалогов, затем импортируется в  App
 
