@@ -22,14 +22,12 @@ const MyPosts = (props: MyPostsPropsType) => {
     let onAddPost = () => {
         if (newPostElement.current) {
             props.addPost(newPostElement.current.value)
-            // props.dispatch(addPostActionCreator(newPostElement.current.value))
         }
     }
 
     let onPostChange = () => {
         if (newPostElement.current) {
             props.updateNewPostText(newPostElement.current?.value)
-            // props.dispatch(updateNewPostTextActionCreator(newPostElement.current?.value))
         }
     }
 

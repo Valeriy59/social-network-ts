@@ -11,18 +11,12 @@ import {ActionsTypes, StoreType} from "./redux/state";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import {Store} from "redux";
 
-// export type AppPropsType = {
-//     posts:Array<PostObjType>
-//     dialogs: Array<DialogsObjType>
-//     messages: Array<MessagesObjType>
-// }
 type StatePropsType = {
     store: Store
     dispatch: (action: ActionsTypes) => void
 }
 // Роут компонента отвечает за строку браузера, запускает рендер в зависимотси от пас
 const App = (props: StatePropsType) => {
-    const state = props.store.getState()
     return (
         <BrowserRouter>
             <div className='app-wrapper'>
@@ -33,8 +27,7 @@ const App = (props: StatePropsType) => {
                         store={props.store}/>}
                     />
                     <Route path="/dialogs" render={() => <DialogsContainer
-                        store={props.store}
-                    />}
+                        store={props.store}/>}
                     />
                     <Route path="/settings" render={() => <Settings/>}/>
                     <Route path="/music" render={() => <Music/>}/>

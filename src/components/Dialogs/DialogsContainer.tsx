@@ -8,9 +8,6 @@ import {Store} from "redux";
 
 type DialogsPropsType = {
     store: Store
-    // updateNewMessageBody: () => void
-    // sendMessage: () => void
-    // dialogsPage: DialogsPageType
 }
 
 const DialogsContainer = (props: DialogsPropsType) => {

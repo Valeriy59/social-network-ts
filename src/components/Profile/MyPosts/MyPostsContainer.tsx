@@ -1,6 +1,5 @@
 import React from 'react';
 import {addPostActionCreator, updateNewPostTextActionCreator} from "../../../redux/profile-reducer";
-import {StoreType} from "../../../redux/state";
 import MyPosts from "./MyPosts";
 import {Store} from "redux";
 
@@ -8,8 +7,6 @@ import {Store} from "redux";
 
 type MyPostsPropsType = {
     store: Store
-    // addPost: () => void
-    // updateNewPostText: (text: string) => void
 }
 
 const MyPostsContainer = (props: MyPostsPropsType) => {
