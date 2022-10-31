@@ -7,14 +7,9 @@ import Music from './components/Music/Music';
 import News from './components/News/News';
 import Settings from './components/Settings/Settings';
 import {BrowserRouter, Route} from 'react-router-dom';
-import {ActionsTypes, StoreType} from "./redux/state";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
-import {Store} from "redux";
 
-type StatePropsType = {
-    store: Store
-    dispatch: (action: ActionsTypes) => void
-}
+
 // Роут компонента отвечает за строку браузера, запускает рендер в зависимотси от пас
 const App = () => {
     return (
