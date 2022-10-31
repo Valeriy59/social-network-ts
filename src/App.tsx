@@ -16,19 +16,16 @@ type StatePropsType = {
     dispatch: (action: ActionsTypes) => void
 }
 // Роут компонента отвечает за строку браузера, запускает рендер в зависимотси от пас
-const App = (props: StatePropsType) => {
+const App = () => {
     return (
         <BrowserRouter>
             <div className='app-wrapper'>
                 <Header/>
                 <Nav/>
                 <div className='app-wrapper-content'>
-                    <Route path="/profile" render={() => <Profile
-                        store={props.store}/>}
-                    />
-                    <Route path="/dialogs" render={() => <DialogsContainer
-                        store={props.store}/>}
-                    />
+                    {/*удаляем стор из пропсов у контейнерных компонентов*/}
+                    <Route path="/profile" render={() => <Profile/>}/>
+                    <Route path="/dialogs" render={() => <DialogsContainer/>}/>
                     <Route path="/settings" render={() => <Settings/>}/>
                     <Route path="/music" render={() => <Music/>}/>
                     <Route path="/news" render={() => <News/>}/>

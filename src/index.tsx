@@ -6,14 +6,18 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import store from "./redux/redux-store";
 import {BrowserRouter} from "react-router-dom";
+import StoreContext from './StoreContext';
 
 //перерисовка всего дерева для отображения нового поста
 let rerenderEntireTree = () => {
     //находим элемент рут и отрисовываем Апп
     ReactDOM.render(
         <BrowserRouter>
-            <App store={store} dispatch={store.dispatch.bind(store)}/>
-        </BrowserRouter>,  document.getElementById('root'));
+            {/*оборачиваем все в конекст*/}
+            <StoreContext.Provider value={store}>
+            <App/>
+            </StoreContext.Provider>
+            </BrowserRouter>,  document.getElementById('root'));
 }
 
 rerenderEntireTree()

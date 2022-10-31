@@ -9,12 +9,13 @@ type ProfilePropsType = {
     store: Store
 }
 // функциональная компонента, должна принимать в себя данные извне. чистая функция
-const Profile = (props: ProfilePropsType) => {
+const Profile = () => {
 
     return (
         <div className={s.content}>
             <ProfileInfo/>
-            <MyPostsContainer store={props.store}/>
+            {/*удаляем стор из пропсов у контейнерных компонентов*/}
+            <MyPostsContainer/>
         </div>
     )
 }
