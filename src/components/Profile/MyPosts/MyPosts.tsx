@@ -14,7 +14,7 @@ type MyPostsPropsType = {
 }
 
 const MyPosts = (props: MyPostsPropsType) => {
-    let postsElements = props.posts.map(p => <Post message={p.post} likesCount={p.likesCount}/>)
+    let postsElements = props.posts.map(p => <Post key={p.id} message={p.post} likesCount={p.likesCount}/>)
     // создается ссылка
     let newPostElement = React.createRef<HTMLTextAreaElement>()
 

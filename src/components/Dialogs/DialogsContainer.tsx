@@ -1,34 +1,36 @@
 import React from 'react';
 import {sendMessageActionCreator, updateNewMessageBodyActionCreator} from "../../redux/dialogs-reducer";
 import Dialogs from "./Dialogs";
-import {Store} from "redux";
-import StoreContext from '../../StoreContext';
+import {Dispatch} from "redux";
+import {connect} from "react-redux";
+import {AppStateType} from "../../redux/redux-store";
+import {DialogsPageType} from "../../redux/state";
 
-//  Компонента для диалогов, затем импортируется в  App
 
-const DialogsContainer = () => {
-    return (
-        <StoreContext.Consumer>
-            {
-            (store) => {
-                let state = store.getState().dialogsPage
-                let onSendMessageClick = () => {
-                    store.dispatch(sendMessageActionCreator())
-                }
-                let onNewMessageChange = (body:string) => {
-                    store.dispatch(updateNewMessageBodyActionCreator(body))
-                }
-                return (
-                    <Dialogs
-                        updateNewMessageBody={onNewMessageChange}
-                        sendMessage={onSendMessageClick}
-                        dialogsPage={state}
-                    />
-                )
-            }
-        }
-        </StoreContext.Consumer>
-    )
+type MapStatePropsType = {
+    dialogsPage: DialogsPageType
 }
+type MapDispatchPropsType = {
+    updateNewMessageBody: (body:string) => void,
+    sendMessage: () => void
+}
+
+let mapStateToProps = (state: AppStateType): MapStatePropsType => {
+    return {
+        dialogsPage: state.dialogsPage
+    }
+}
+
+let mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
+    return {
+        updateNewMessageBody: (body:string) => {
+            dispatch(updateNewMessageBodyActionCreator(body))
+        },
+        sendMessage: () => {
+            dispatch(sendMessageActionCreator())
+        }
+    }
+}
+const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs)
 
 export default DialogsContainer

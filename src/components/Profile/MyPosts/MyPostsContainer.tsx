@@ -1,36 +1,41 @@
 import React from 'react';
 import {addPostActionCreator, updateNewPostTextActionCreator} from "../../../redux/profile-reducer";
 import MyPosts from "./MyPosts";
-import {Store} from "redux";
-import StoreContext from '../../../StoreContext';
+import {Dispatch} from "redux";
+import {PostObjType} from "../../../redux/state";
+import {AppStateType} from "../../../redux/redux-store";
+import {connect} from "react-redux";
+
 
 //  Контейнерная компонента для работы со стором
 
-// Стор достаем из контекста а не из пропсов
-const MyPostsContainer = () => {
-    return (
-        // обращаемся к стору через контекст - функция которая принимает стор и возвращает jsx разметку
-        <StoreContext.Consumer>{
-            (store) => {
-                let state = store.getState().profilePage
-                let addPost = (postText: string) => {
-                    store.dispatch(addPostActionCreator(postText))
-                }
-                let onPostChange = (newText: string) => {
-                    store.dispatch(updateNewPostTextActionCreator(newText))
-                }
-                return (
-                    <MyPosts
-                        posts={state.posts}
-                        newPostText={state.newPostText}
-                        addPost={addPost}
-                        updateNewPostText={onPostChange}
-                    />
-                )
-            }
-        }
-        </StoreContext.Consumer>
-    )
+type MapStatePropsType = {
+    posts: Array<PostObjType>,
+    newPostText: string
+}
+type MapDispatchPropsType = {
+    addPost: (postText: string) => void,
+    updateNewPostText: (newText: string) => void
 }
 
+let mapStateToProps = (state: AppStateType): MapStatePropsType => {
+    return {
+        posts: state.profilePage.posts,
+        newPostText: state.profilePage.newPostText
+    }
+}
+
+let mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
+    return {
+        addPost: (postText: string) => {
+            dispatch(addPostActionCreator(postText))
+        },
+        updateNewPostText: () => (newText: string) => {
+            dispatch(updateNewPostTextActionCreator(newText))
+        }
+    }
+}
+const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts)
+
 export default MyPostsContainer
+
