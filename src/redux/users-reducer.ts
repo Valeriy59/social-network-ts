@@ -22,10 +22,16 @@ type LocationType ={
 export type UserType = {
     id: number,
     followed: boolean,
-    fullName: string,
+    name: string,
     status: string,
-    location: LocationType
+    location: LocationType,
+    photos: {
+        small: string,
+        large: string
+    }
 }
+
+
 export type UsersPageType = {
     users: UserType[]
 }

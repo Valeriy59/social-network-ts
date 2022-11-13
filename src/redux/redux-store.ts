@@ -14,5 +14,5 @@ let rootReducer = combineReducers({
 export type AppStateType = ReturnType<typeof rootReducer>
 
 let store = createStore(rootReducer)
-
+export type StateType = ReturnType<typeof store.getState>
 export default store
