@@ -8,14 +8,35 @@ import styles from "./Users.module.css"
 
 class Users extends React.Component<UsersPropsType>{
     componentDidMount() {
-            axios.get('https://social-network.samuraijs.com/api/1.0/users')
+            axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.usersPage.currentPage}&count=${this.props.usersPage.pageSize}`)
                 .then(response => {this.props.setUsers(response.data.items)})
+    }
+    onPageChanged = (pageNumber: number) => {
+
+        this.props.setCurrentPage(pageNumber)
+         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.usersPage.pageSize}`)
+            .then(response => {
+                this.props.setUsers(response.data.items)
+                this.props.setTotalUsersCount(response.data.totalCount)
+                console.log(response.data.totalCount)
+            })
     }
 
     render() {
         let state = this.props.usersPage
+        let pagesCount = Math.ceil(state.totalUsersCount / state.pageSize)
+        let pages = []
+        for (let i = 1; i <= pagesCount; i++) {
+            pages.push(i)
+        }
         return (
             <div>
+                <div>
+                    {pages.map(p => {
+                        return <span className={state.currentPage === p ? styles.selectedPage : ''}
+                                     onClick = {() => {this.onPageChanged(p)}}>{p}</span>
+                    })}
+                </div>
                 {
                     state.users.map(u => <div key={u.id}>
                 <span>

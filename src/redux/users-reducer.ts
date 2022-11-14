@@ -8,12 +8,20 @@ export type UnfollowActionType = {
     type: "UNFOLLOW",
     id: number
 }
-export type SetUsersAC = {
+export type SetUsersActionType = {
     type: "SET USERS"
     users: UserType[]
 }
+export type SetCurrentPageActionType = {
+    type: "SET CURRENT PAGE"
+    currentPage: number
+}
+export type SetTotalUsersCountActionType = {
+    type: "SET TOTAL USERS COUNT"
+    totalUsersCount: number
+}
 
-type ActionsTypes = FollowActionType | UnfollowActionType | SetUsersAC
+type ActionsTypes = FollowActionType | UnfollowActionType | SetUsersActionType | SetCurrentPageActionType | SetTotalUsersCountActionType
 
 type LocationType ={
     city: string,
@@ -31,17 +39,26 @@ export type UserType = {
     }
 }
 
-
 export type UsersPageType = {
-    users: UserType[]
+    users: UserType[],
+    pageSize: number,
+    totalUsersCount: number,
+    currentPage: number
 }
 
 let initialState: UsersPageType = {
-    users: []
+    users: [],
+    pageSize: 5,
+    totalUsersCount: 21,
+    currentPage: 2
 }
+
 const FOLLOW = "FOLLOW"
 const UNFOLLOW = "UNFOLLOW"
 const SET_USERS = "SET USERS"
+const SET_CURRENT_PAGE = "SET CURRENT PAGE"
+const SET_TOTAL_USERS_COUNT = "SET TOTAL USERS COUNT"
+
 
 export const usersReducer = (state: UsersPageType = initialState, action: ActionsTypes): UsersPageType => {
     switch (action.type) {
@@ -50,7 +67,11 @@ export const usersReducer = (state: UsersPageType = initialState, action: Action
         case UNFOLLOW:
             return {...state, users: state.users.map(u => u.id === action.id ? {...u, followed: false} : u)}
         case SET_USERS:
-            return {...state, users: [...state.users, ...action.users]}
+            return {...state, users: action.users}
+        case SET_CURRENT_PAGE:
+            return {...state, currentPage: action.currentPage}
+        case SET_TOTAL_USERS_COUNT:
+            return {...state, totalUsersCount: action.totalUsersCount}
         default:
             return state
     }
@@ -67,9 +88,21 @@ export const unfollowAC = (userId: number): UnfollowActionType => (
         id: userId
     }
 )
-export const setUsersAC = (users: UserType[]): SetUsersAC => (
+export const setUsersAC = (users: UserType[]): SetUsersActionType => (
     {
         type: SET_USERS,
         users: users
+    }
+)
+export const setCurrentPageAC = (currentPage: number): SetCurrentPageActionType => (
+    {
+        type: SET_CURRENT_PAGE,
+        currentPage: currentPage
+    }
+)
+export const setTotalUsersCountAC = (totalUsersCount: number): SetTotalUsersCountActionType => (
+    {
+        type: SET_TOTAL_USERS_COUNT,
+        totalUsersCount: totalUsersCount
     }
 )
