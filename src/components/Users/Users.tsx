@@ -1,22 +1,32 @@
 import React from 'react'
-import {UsersPropsType} from "./UsersContainer";
-import axios from "axios";
-import userPhoto from "../../assets/images/img.jpg"
-import styles from "./Users.module.css"
+import styles from "./Users.module.css";
+import userPhoto from "../../assets/images/img.jpg";
+import {UsersPageType} from "../../redux/users-reducer";
 
+
+type UsersPropsType = {
+    usersPage: UsersPageType,
+    follow: (userId: number) => void,
+    unfollow: (userId: number) => void,
+    onPageChanged: (pageNumber: number) => void,
+}
+
+// Презентационная компонента - чистая функция, которая возвращает jsx
 const Users = (props: UsersPropsType) => {
-
     let state = props.usersPage
-    if (state.users.length === 0) {
-        axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {props.setUsers(response.data.items)})
-        // props.setUsers([
-        //     { id: 1, followed: false, fullName: 'Dmitry', status: 'I am a boss', location: {city: 'Minsk', country: 'Belarus'} },
-        //     { id: 2, followed: true, fullName: 'Sasha', status: 'I am a boss too', location: {city: 'Moscow', country: 'Russia'} },
-        //     { id: 2, followed: false, fullName: 'Andrey', status: 'I am a boss too', location: {city: 'Kiev', country: 'Ukraine'} }
-        // ])
+    let pagesCount = Math.ceil(state.totalUsersCount / state.pageSize)
+    let pages = []
+    for (let i = 1; i <= pagesCount; i++) {
+        pages.push(i)
     }
     return (
         <div>
+            <div>
+                {pages.map((p,index) => {
+                    return <span key={index} className={state.currentPage === p ? styles.selectedPage : ''}
+                                 onClick = {() => {props.onPageChanged(p)}}>{p}</span>
+                })}
+            </div>
             {
                 state.users.map(u => <div key={u.id}>
                 <span>
@@ -25,8 +35,8 @@ const Users = (props: UsersPropsType) => {
                     </div>
                     <div>
                         {u.followed
-                        ? <button onClick={() => {props.follow(u.id)}}>Unfollow</button>
-                        : <button onClick={() => {props.unfollow(u.id)}}>Follow</button>}
+                            ? <button onClick={() => {props.follow(u.id)}}>Unfollow</button>
+                            : <button onClick={() => {props.unfollow(u.id)}}>Follow</button>}
                     </div>
                 </span>
                     <span>
@@ -44,4 +54,5 @@ const Users = (props: UsersPropsType) => {
         </div>
     )
 }
+
 export default Users

@@ -49,8 +49,8 @@ export type UsersPageType = {
 let initialState: UsersPageType = {
     users: [],
     pageSize: 5,
-    totalUsersCount: 21,
-    currentPage: 2
+    totalUsersCount: 1,
+    currentPage: 1
 }
 
 const FOLLOW = "FOLLOW"
