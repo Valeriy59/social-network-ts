@@ -8,22 +8,71 @@ export type UpdateNewPostTextActionType = {
     type: "UPDATE NEW POST TEXT"
     newText: string
 }
-type ActionsTypes = AddPostActionType | UpdateNewPostTextActionType
+export type SetUserProfileActionType = {
+    type: "SET USER PROFILE"
+    profile: ProfileUserType
+}
+
+export type ProfileUserType = {
+    aboutMe: string
+    contacts: {
+        facebook: string
+        website: string
+        vk: string
+        twitter: string
+        instagram: string
+        youtube: string
+        github: string
+        mainLink: string
+    },
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    fullName: string
+    userId: number
+    photos: {
+        small: string
+        large: string
+    }
+}
+
+type ActionsTypes = AddPostActionType | UpdateNewPostTextActionType | SetUserProfileActionType
 
 let initialState: ProfilePageType = {
-        posts: [
-            { id: 1, post: 'Hi, how are you?', likesCount: 12 },
-            { id: 2, post: "It's my first post", likesCount: 11 },
-            { id: 3, post: 'How are you?', likesCount: 10 },
-            { id: 4, post: 'yo', likesCount: 14 },
-            { id: 5, post: 'yo', likesCount: 19 },
-            { id: 6, post: 'yo', likesCount: 10 },
-            { id: 7, post: '324f', likesCount: 24 }
-        ],
-        newPostText: 'it-kamasutra'
+    posts: [
+        {id: 1, post: 'Hi, how are you?', likesCount: 12},
+        {id: 2, post: "It's my first post", likesCount: 11},
+        {id: 3, post: 'How are you?', likesCount: 10},
+        {id: 4, post: 'yo', likesCount: 14},
+        {id: 5, post: 'yo', likesCount: 19},
+        {id: 6, post: 'yo', likesCount: 10},
+        {id: 7, post: '324f', likesCount: 24}
+    ],
+    newPostText: 'it-kamasutra',
+    profile: {
+        aboutMe: '',
+        contacts: {
+            facebook: '',
+            website: '',
+            vk: '',
+            twitter: '',
+            instagram: '',
+            youtube: '',
+            github: '',
+            mainLink: '',
+        },
+        lookingForAJob: false,
+        lookingForAJobDescription: '',
+        fullName: '',
+        userId: 0,
+        photos: {
+            small: '',
+            large: '',
+        }
+    }
 }
 const UPDATE_NEW_POST_TEXT = "UPDATE NEW POST TEXT"
 const ADD_POST = "ADD POST"
+const SET_USER_PROFILE = "SET USER PROFILE"
 
 export const profileReducer = (state: ProfilePageType = initialState, action: ActionsTypes) => {
     switch (action.type) {
@@ -39,6 +88,9 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
         case UPDATE_NEW_POST_TEXT: {
             return {...state, newPostText: action.newText}
         }
+        case SET_USER_PROFILE: {
+            return {...state, profile: action.profile}
+        }
         default:
             return state
     }
@@ -53,5 +105,11 @@ export const updateNewPostTextActionCreator = (newText: string): UpdateNewPostTe
     {
         type: UPDATE_NEW_POST_TEXT,
         newText: newText
+    }
+)
+export const setUserProfile = (profile: ProfileUserType): SetUserProfileActionType => (
+    {
+        type: SET_USER_PROFILE,
+        profile: profile
     }
 )

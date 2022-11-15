@@ -2,14 +2,15 @@ import React from 'react';
 import s from './Profile.module.css'
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
-import {Store} from "redux";
+import {ProfilePropsType} from "./ProfileContainer";
 //  Компонента для профиля, затем импортируется в  App
 // функциональная компонента, должна принимать в себя данные извне. чистая функция
-const Profile = () => {
+
+const Profile = (props: ProfilePropsType) => {
 
     return (
         <div className={s.content}>
-            <ProfileInfo/>
+            <ProfileInfo profile={props.profile}/>
             {/*удаляем стор из пропсов у контейнерных компонентов*/}
             <MyPostsContainer/>
         </div>
