@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from "./Header";
-import {AuthPageType, setAuthUserData} from "../../redux/auth-reducer";
+import {setAuthUserData} from "../../redux/auth-reducer";
 import axios from "axios";
 import {connect} from "react-redux";
 import {StateType} from "../../redux/redux-store";
