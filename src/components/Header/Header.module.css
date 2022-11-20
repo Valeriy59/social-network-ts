@@ -6,3 +6,10 @@
 .item {
   color: white;
 }
+
+.loginBlock {
+  float: right;
+}
+.loginBlock a{
+  color: white;
+}
