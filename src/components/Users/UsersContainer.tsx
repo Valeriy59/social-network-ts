@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import {
     follow,
-    setCurrentPage, setIsFetching,
+    setCurrentPage, setFollowingProgress, setIsFetching,
     setTotalUsersCount,
     setUsers,
     unfollow,
@@ -24,7 +24,8 @@ type MapDispatchPropsType = {
     setUsers: (users: UserType[]) => void,
     setCurrentPage: (pageNumber: number) => void,
     setTotalUsersCount: (totalUsersCount: number) => void,
-    setIsFetching: (isFetching: boolean) => void
+    setIsFetching: (isFetching: boolean) => void,
+    setFollowingProgress: (userId: number, followingInProgress: number[]) => void
 }
 export type UsersPropsType = MapStatePropsType & MapDispatchPropsType
 
@@ -57,6 +58,7 @@ class UsersContainer extends React.Component<UsersPropsType>{
                        onPageChanged={this.onPageChanged}
                        follow={this.props.follow}
                        unfollow={this.props.unfollow}
+                       setFollowingProgress={this.props.setFollowingProgress}
                 />
             </>
         )
@@ -70,4 +72,4 @@ let mapStateToProps = (state: StateType): MapStatePropsType => {
     }
 }
 
-export default connect(mapStateToProps, {follow, unfollow, setUsers, setCurrentPage, setTotalUsersCount, setIsFetching})(UsersContainer)
+export default connect(mapStateToProps, {follow, unfollow, setUsers, setCurrentPage, setTotalUsersCount, setIsFetching, setFollowingProgress})(UsersContainer)

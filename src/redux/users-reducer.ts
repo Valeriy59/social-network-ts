@@ -22,10 +22,21 @@ export type SetIsFetchingActionType = {
     type: "SET ISFETCHING"
     isFetching: boolean
 }
+export type SetFollowingProgressActionType = {
+    type: "SET FOLLOWING PROGRESS"
+    followingInProgress: number[],
+    userId: number
+}
 
-type ActionsTypes = FollowActionType | UnfollowActionType | SetUsersActionType | SetCurrentPageActionType | SetTotalUsersCountActionType | SetIsFetchingActionType
+type ActionsTypes = FollowActionType
+    | UnfollowActionType
+    | SetUsersActionType
+    | SetCurrentPageActionType
+    | SetTotalUsersCountActionType
+    | SetIsFetchingActionType
+    | SetFollowingProgressActionType
 
-type LocationType ={
+type LocationType = {
     city: string,
     country: string
 }
@@ -46,7 +57,8 @@ export type UsersPageType = {
     pageSize: number,
     totalUsersCount: number,
     currentPage: number,
-    isFetching: boolean
+    isFetching: boolean,
+    followingInProgress: number[]
 }
 
 let initialState: UsersPageType = {
@@ -54,7 +66,8 @@ let initialState: UsersPageType = {
     pageSize: 5,
     totalUsersCount: 1,
     currentPage: 1,
-    isFetching: true
+    isFetching: true,
+    followingInProgress: []
 }
 
 const FOLLOW = "FOLLOW"
@@ -63,6 +76,7 @@ const SET_USERS = "SET USERS"
 const SET_CURRENT_PAGE = "SET CURRENT PAGE"
 const SET_TOTAL_USERS_COUNT = "SET TOTAL USERS COUNT"
 const SET_ISFETCHING = "SET ISFETCHING"
+const SET_FOLLOWING_PROGRESS = "SET FOLLOWING PROGRESS"
 
 
 export const usersReducer = (state: UsersPageType = initialState, action: ActionsTypes): UsersPageType => {
@@ -79,6 +93,11 @@ export const usersReducer = (state: UsersPageType = initialState, action: Action
             return {...state, totalUsersCount: action.totalUsersCount}
         case SET_ISFETCHING:
             return {...state, isFetching: action.isFetching}
+        case SET_FOLLOWING_PROGRESS:
+            return {...state,
+                followingInProgress: action.followingInProgress
+                    ? [...state.followingInProgress, action.userId]
+                    : state.followingInProgress.filter(id => id !== action.userId)}
         default:
             return state
     }
@@ -117,5 +136,12 @@ export const setIsFetching = (isFetching: boolean): SetIsFetchingActionType => (
     {
         type: SET_ISFETCHING,
         isFetching: isFetching
+    }
+)
+export const setFollowingProgress = (userId: number, followingInProgress: number[]): SetFollowingProgressActionType => (
+    {
+        type: SET_FOLLOWING_PROGRESS,
+        followingInProgress: followingInProgress,
+        userId: userId
     }
 )
