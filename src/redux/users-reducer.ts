@@ -1,7 +1,5 @@
 import {usersAPI} from "../api/api";
-import {useDispatch} from "react-redux";
-import {ThunkAction} from "redux-thunk";
-import {AppStateType} from "./redux-store";
+import {Dispatch} from "redux";
 
 export type FollowActionType = {
     type: "FOLLOW",
@@ -29,7 +27,7 @@ export type SetIsFetchingActionType = {
 }
 export type SetFollowingProgressActionType = {
     type: "SET FOLLOWING PROGRESS"
-    followingInProgress: number[],
+    followingInProgress: boolean,
     userId: number
 }
 
@@ -143,7 +141,7 @@ export const setIsFetching = (isFetching: boolean): SetIsFetchingActionType => (
         isFetching: isFetching
     }
 )
-export const setFollowingProgress = (userId: number, followingInProgress: number[]): SetFollowingProgressActionType => (
+export const setFollowingProgress = (userId: number, followingInProgress: boolean): SetFollowingProgressActionType => (
     {
         type: SET_FOLLOWING_PROGRESS,
         followingInProgress: followingInProgress,
@@ -151,7 +149,7 @@ export const setFollowingProgress = (userId: number, followingInProgress: number
     }
 )
 export const getUsersTC = (currentPage: number, pageSize: number) => {
-    return (dispatch= useDispatch()) => {
+    return (dispatch: Dispatch<ActionsTypes>) => {
         dispatch(setIsFetching(true))
         usersAPI.getUsers(currentPage, pageSize)
             .then(data => {
@@ -162,7 +160,7 @@ export const getUsersTC = (currentPage: number, pageSize: number) => {
     }
 }  
 export const followTC = (userId: number) => {
-    return (dispatch= useDispatch()) => {
+    return (dispatch: Dispatch<ActionsTypes>) => {
         dispatch(setFollowingProgress(userId,true))
         usersAPI.follow(userId)
             .then(data => {
@@ -174,7 +172,7 @@ export const followTC = (userId: number) => {
     }
 }
 export const unfollowTC = (userId: number) => {
-    return (dispatch= useDispatch()) => {
+    return (dispatch: Dispatch<ActionsTypes>) => {
         dispatch(setFollowingProgress(userId,true))
         usersAPI.unfollow(userId)
             .then(data => {

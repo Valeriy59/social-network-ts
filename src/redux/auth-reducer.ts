@@ -1,3 +1,7 @@
+import {authAPI, usersAPI} from "../api/api";
+import {Dispatch} from "redux";
+import {setUserProfile} from "./profile-reducer";
+
 export type SetAuthUserDataActionType = {
     type: "SET USER DATA"
     data: {
@@ -44,4 +48,17 @@ export const setAuthUserData = (userId: number, email: string, login: string): S
         }
     }
 )
+
+export const getAuthUserData = () => {
+    return (dispatch: Dispatch<ActionsTypes>) => {
+        authAPI.getAuth()
+            .then(data => {
+                if (data.resultCode === 0) {
+                    let {id, email, login} = data.data
+                    dispatch(setAuthUserData(id, email, login))
+                }
+            })
+    }
+}
+
 

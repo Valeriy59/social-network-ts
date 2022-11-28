@@ -1,10 +1,9 @@
 import React from 'react'
 import styles from "./Users.module.css";
 import userPhoto from "../../assets/images/img.jpg";
-import {followTC, UsersPageType} from "../../redux/users-reducer";
+import {UsersPageType} from "../../redux/users-reducer";
 import {NavLink} from "react-router-dom";
-import axios from "axios";
-import {usersAPI} from "../../api/api";
+
 
 
 type UsersPropsType = {

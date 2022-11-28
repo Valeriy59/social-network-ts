@@ -1,4 +1,6 @@
 import {PostObjType, ProfilePageType} from "./state";
+import {Dispatch} from "redux";
+import {usersAPI} from "../api/api";
 
 export type AddPostActionType = {
     type: "ADD POST"
@@ -113,3 +115,12 @@ export const setUserProfile = (profile: ProfileUserType): SetUserProfileActionTy
         profile: profile
     }
 )
+
+export const getUserProfile = (userId: string) => {
+    return (dispatch: Dispatch<ActionsTypes>) => {
+        usersAPI.getProfile(userId)
+            .then(response => {
+                dispatch(setUserProfile(response.data))
+            })
+    }
+}

@@ -20,7 +20,7 @@ const App = () => {
                 <Nav/>
                 <div className='app-wrapper-content'>
                     {/*удаляем стор из пропсов у контейнерных компонентов*/}
-                    <Route path="/profile/:userId" render={() => <ProfileContainer/>}/>
+                    <Route path="/profile/:userId?" render={() => <ProfileContainer/>}/>
                     <Route path="/dialogs" render={() => <DialogsContainer/>}/>
                     <Route path="/settings" render={() => <Settings/>}/>
                     <Route path="/music" render={() => <Music/>}/>
