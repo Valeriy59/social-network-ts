@@ -9,6 +9,7 @@ import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
+import Login from "./components/Login/Login";
 
 
 // Роут компонента отвечает за строку браузера, запускает рендер в зависимотси от пас
@@ -26,6 +27,7 @@ const App = () => {
                     <Route path="/music" render={() => <Music/>}/>
                     <Route path="/news" render={() => <News/>}/>
                     <Route path="/users" render={() => <UsersContainer/>}/>
+                    <Route path="/login" render={() => <Login/>}/>
                 </div>
             </div>
         </BrowserRouter>
