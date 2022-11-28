@@ -1,3 +1,8 @@
+import {usersAPI} from "../api/api";
+import {useDispatch} from "react-redux";
+import {ThunkAction} from "redux-thunk";
+import {AppStateType} from "./redux-store";
+
 export type FollowActionType = {
     type: "FOLLOW",
     id: number
@@ -145,3 +150,38 @@ export const setFollowingProgress = (userId: number, followingInProgress: number
         userId: userId
     }
 )
+export const getUsersTC = (currentPage: number, pageSize: number) => {
+    return (dispatch= useDispatch()) => {
+        dispatch(setIsFetching(true))
+        usersAPI.getUsers(currentPage, pageSize)
+            .then(data => {
+                dispatch(setIsFetching(false))
+                dispatch(setUsers(data.items))
+                dispatch(setTotalUsersCount(data.totalCount))
+            })
+    }
+}  
+export const followTC = (userId: number) => {
+    return (dispatch= useDispatch()) => {
+        dispatch(setFollowingProgress(userId,true))
+        usersAPI.follow(userId)
+            .then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(follow(userId))
+                }
+                dispatch(setFollowingProgress(userId,false))
+            })
+    }
+}
+export const unfollowTC = (userId: number) => {
+    return (dispatch= useDispatch()) => {
+        dispatch(setFollowingProgress(userId,true))
+        usersAPI.unfollow(userId)
+            .then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(unfollow(userId))
+                }
+                dispatch(setFollowingProgress(userId,false))
+            })
+    }
+}
