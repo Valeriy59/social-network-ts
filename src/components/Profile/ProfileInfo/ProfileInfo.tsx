@@ -2,9 +2,11 @@ import React from 'react';
 import s from './ProfileInfo.module.css'
 import {ProfileUserType} from "../../../redux/profile-reducer";
 import userPhoto from "../../../assets/images/img.jpg";
+import ProfileStatus from "./ProfileStatus"
 
 type ProfileInfoType ={
-    profile: ProfileUserType
+    profile: ProfileUserType,
+
 }
 
 const ProfileInfo = (props: ProfileInfoType) => {
@@ -16,7 +18,7 @@ const ProfileInfo = (props: ProfileInfoType) => {
             <div className={s.descriptionBlock}>
                 <img src={props.profile.photos.large !== null ? props.profile.photos.large : userPhoto}/>
                 <span>{props.profile.aboutMe}</span>
-                ava + desc
+                <ProfileStatus status={''}/>
             </div>
         </div>
     )

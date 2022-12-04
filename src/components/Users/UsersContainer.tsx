@@ -54,7 +54,7 @@ let mapStateToProps = (state: StateType): MapStatePropsType => {
     }
 }
 
-export default compose(
+export default compose<React.ComponentType>(
     connect(mapStateToProps, {followTC, unfollowTC, setCurrentPage, setFollowingProgress, getUsersTC}),
     withAuthRedirect
 )(UsersContainer)
