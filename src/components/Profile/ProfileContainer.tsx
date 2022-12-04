@@ -3,12 +3,12 @@ import Profile from "./Profile";
 import {connect} from "react-redux";
 import {getUserProfile, ProfileUserType} from "../../redux/profile-reducer";
 import {StateType} from "../../redux/redux-store";
-import {Redirect, RouteComponentProps, withRouter} from "react-router-dom";
+import {RouteComponentProps, withRouter} from "react-router-dom";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 
 type MapStatePropsType = {
-    profile: ProfileUserType,
-    isAuth: boolean
+    profile: ProfileUserType | null,
 }
 type MapDispatchPropsType = {
     getUserProfile: (userId: string) => void
@@ -16,10 +16,10 @@ type MapDispatchPropsType = {
 type PathParamsType = {
     userId: string
 }
-export type ProfilePropsType = MapStatePropsType & MapDispatchPropsType & RouteComponentProps<PathParamsType>
+export type ProfilePropsType = MapStatePropsType & MapDispatchPropsType
+type ProfileContainerPropsType = RouteComponentProps<PathParamsType> & ProfilePropsType
 
-
-class ProfileContainer extends React.Component<ProfilePropsType>{
+class ProfileContainer extends React.Component<ProfileContainerPropsType>{
     // после вмонтирования компонента, отправить запрос на сервер
     componentDidMount() {
         let userId = this.props.match.params.userId
@@ -27,18 +27,16 @@ class ProfileContainer extends React.Component<ProfilePropsType>{
         this.props.getUserProfile(userId)
     }
     render() {
-        if (!this.props.isAuth) {
-            return <Redirect to={"/Login"}/>
-        }
         return (
             <Profile {...this.props} profile={this.props.profile}/>
         )
     }
 }
+
+
 let mapStateToProps = (state: StateType): MapStatePropsType => ({
     profile: state.profilePage.profile,
-    isAuth: state.auth.isAuth
 })
 
-// let withUrlDataContainer = withRouter(ProfileContainer)
-export default withRouter(connect(mapStateToProps, {getUserProfile})(ProfileContainer))
+// let WithUrlDataContainerComponent = withRouter(ProfileContainer)
+export default withAuthRedirect(withRouter(connect(mapStateToProps, {getUserProfile})(ProfileContainer)))
