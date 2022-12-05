@@ -1,42 +1,64 @@
-import React from "react";
+import React, {ChangeEvent} from "react";
 
 
-type ProfileStatusType = {
+type ProfileStatusPropsType = {
     status: string
+    updateUserStatus: (status: string) => void
 }
 type ProfileStatusStateType = {
+    status: string
     editMode: boolean
 }
 
-class ProfileStatus extends React.Component<ProfileStatusType, ProfileStatusStateType> {
+class ProfileStatus extends React.Component<ProfileStatusPropsType, ProfileStatusStateType> {
     state = {
-        editMode: false
+        editMode: false,
+        status: this.props.status
     }
-    activateEditMode () {
+    activateEditMode = () => {
         this.setState(
             {
                 editMode: true
             }
         )
     }
-    deactivateEditMode () {
+    deactivateEditMode = () => {
         this.setState(
             {
                 editMode: false
             }
         )
+        this.props.updateUserStatus(this.state.status)
     }
+    onChangeStatus = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        this.setState({
+            status: e.currentTarget.value
+        })
+    }
+    // componentDidUpdate(prevProps: Readonly<ProfileStatusProps>, prevState: Readonly<{}>, snapshot?: any) {
+    //     if (prevProps.status !== this.props.status){
+    //         this.setState({
+    //             status: this.props.status
+    //         })
+    //     }
+    // }
+
     render(){
         return (
             <div>
                 {!this.state.editMode &&
                     <div>
-                        <span onDoubleClick={this.activateEditMode.bind(this)}>{this.props.status}</span>
+                        <span onDoubleClick={this.activateEditMode}>{this.props.status || "----" }</span>
                     </div>
                 }
                 {this.state.editMode &&
                     <div>
-                        <input autoFocus={true} onBlur={this.deactivateEditMode.bind(this)} value={this.props.status}/>
+                        <input
+                            autoFocus={true}
+                            onBlur={this.deactivateEditMode}
+                            value={this.props.status}
+                            onChange={this.onChangeStatus}
+                        />
                     </div>
                 }
             </div>

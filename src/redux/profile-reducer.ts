@@ -1,6 +1,6 @@
 import {PostObjType, ProfilePageType} from "./state";
 import {Dispatch} from "redux";
-import {usersAPI} from "../api/api";
+import {profileAPI, usersAPI} from "../api/api";
 
 export type AddPostActionType = {
     type: "ADD POST"
@@ -43,8 +43,7 @@ export type ProfileUserType = {
     photos: {
         small: string
         large: string
-    },
-    status: string
+    }
 }
 
 type ActionsTypes = AddPostActionType | UpdateNewPostTextActionType | SetUserProfileActionType | SetStatusActionType | AddLikeActionType
@@ -80,8 +79,8 @@ let initialState: ProfilePageType = {
             small: '',
             large: '',
         },
-        status: ""
-    }
+    },
+    status: ''
 
 }
 const UPDATE_NEW_POST_TEXT = "UPDATE NEW POST TEXT"
@@ -152,6 +151,24 @@ export const getUserProfile = (userId: string) => {
         usersAPI.getProfile(userId)
             .then(response => {
                 dispatch(setUserProfile(response.data))
+            })
+    }
+}
+export const getStatus = (userId: string) => {
+    return (dispatch: Dispatch<ActionsTypes>) => {
+        profileAPI.getStatus(userId)
+            .then(response => {
+                dispatch(setStatus(response.data))
+            })
+    }
+}
+export const updateStatus = (status: string) => {
+    return (dispatch: Dispatch<ActionsTypes>) => {
+        profileAPI.updateStatus(status)
+            .then(response => {
+                if (response.data.resultCode === 0) {
+                    dispatch(setStatus(status))
+                }
             })
     }
 }
