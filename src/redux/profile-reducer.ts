@@ -14,6 +14,15 @@ export type SetUserProfileActionType = {
     type: "SET USER PROFILE"
     profile: ProfileUserType
 }
+export type SetStatusActionType = {
+    type: "SET STATUS"
+    status: string
+}
+export type AddLikeActionType = {
+    type: "ADD LIKE"
+    id: string
+    count: number
+}
 
 export type ProfileUserType = {
     aboutMe: string
@@ -34,10 +43,11 @@ export type ProfileUserType = {
     photos: {
         small: string
         large: string
-    }
+    },
+    status: string
 }
 
-type ActionsTypes = AddPostActionType | UpdateNewPostTextActionType | SetUserProfileActionType
+type ActionsTypes = AddPostActionType | UpdateNewPostTextActionType | SetUserProfileActionType | SetStatusActionType | AddLikeActionType
 
 let initialState: ProfilePageType = {
     posts: [
@@ -69,12 +79,16 @@ let initialState: ProfilePageType = {
         photos: {
             small: '',
             large: '',
-        }
+        },
+        status: ""
     }
+
 }
 const UPDATE_NEW_POST_TEXT = "UPDATE NEW POST TEXT"
 const ADD_POST = "ADD POST"
 const SET_USER_PROFILE = "SET USER PROFILE"
+const SET_STATUS = 'SET STATUS'
+const ADD_LIKE = 'ADD LIKE'
 
 export const profileReducer = (state: ProfilePageType = initialState, action: ActionsTypes) => {
     switch (action.type) {
@@ -93,6 +107,11 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
         case SET_USER_PROFILE: {
             return {...state, profile: action.profile}
         }
+        case SET_STATUS:
+            return {...state, status: action.status}
+        // case ADD_LIKE: {
+        //     return {...state, postData: state.postData.map(el => el.id === action.id ? {...el, likes: action.count} : el)}
+        // }
         default:
             return state
     }
@@ -115,7 +134,19 @@ export const setUserProfile = (profile: ProfileUserType): SetUserProfileActionTy
         profile: profile
     }
 )
-
+export const setStatus = (status: string): SetStatusActionType => (
+    {
+        type: SET_STATUS,
+        status: status
+    }
+)
+export const addLike = (count: number, id: string): AddLikeActionType => (
+    {
+        type: ADD_LIKE,
+        count: count,
+        id: id
+    }
+)
 export const getUserProfile = (userId: string) => {
     return (dispatch: Dispatch<ActionsTypes>) => {
         usersAPI.getProfile(userId)

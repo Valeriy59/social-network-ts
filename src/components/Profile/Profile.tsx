@@ -10,8 +10,7 @@ const Profile = (props: ProfilePropsType) => {
 
     return (
         <div className={s.content}>
-            <ProfileInfo profile={props.profile}/>
-            {/*удаляем стор из пропсов у контейнерных компонентов*/}
+            <ProfileInfo status={props.status} profile={props.profile}/>
             <MyPostsContainer/>
         </div>
     )

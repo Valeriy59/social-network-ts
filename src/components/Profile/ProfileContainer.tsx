@@ -2,14 +2,14 @@ import React from "react";
 import Profile from "./Profile";
 import {connect} from "react-redux";
 import {getUserProfile, ProfileUserType} from "../../redux/profile-reducer";
-import {StateType} from "../../redux/redux-store";
+import {AppStateType, StateType} from "../../redux/redux-store";
 import {RouteComponentProps, withRouter} from "react-router-dom";
-import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
 
 
 type MapStatePropsType = {
-    profile: ProfileUserType | null,
+    profile: ProfileUserType,
+    status: string
 }
 type MapDispatchPropsType = {
     getUserProfile: (userId: string) => void
@@ -35,12 +35,12 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType>{
 }
 
 
-let mapStateToProps = (state: StateType): MapStatePropsType => ({
+let mapStateToProps = (state: AppStateType): MapStatePropsType => ({
     profile: state.profilePage.profile,
+    status: state.profilePage.profile.status
 })
 
-export default compose<React.ComponentType>(
+export default compose<React.FC>(
     connect(mapStateToProps, {getUserProfile}),
     withRouter,
-    withAuthRedirect
 )(ProfileContainer)

@@ -32,7 +32,7 @@ const SET_USER_DATA = "SET USER DATA"
 export const authReducer = (state: AuthPageType = initialState, action: ActionsTypes): AuthPageType => {
     switch (action.type) {
         case SET_USER_DATA:
-            return {...state, ...action.data}
+            return {...state, ...action.data, isAuth: true}
         default:
             return state
     }

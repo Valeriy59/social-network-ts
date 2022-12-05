@@ -30,4 +30,5 @@ const mapStateToProps = (state: StateType): MapStatePropsType => {
         isAuth: state.auth.isAuth
     }
 }
+
 export default connect(mapStateToProps, {getAuthUserData})(HeaderContainer)
