@@ -1,7 +1,7 @@
 import React from 'react';
-import {sendMessageActionCreator, updateNewMessageBodyActionCreator} from "../../redux/dialogs-reducer";
+import {sendMessageActionCreator} from "../../redux/dialogs-reducer";
 import Dialogs from "./Dialogs";
-import {compose, Dispatch} from "redux";
+import {Dispatch} from "redux";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
 import {DialogsPageType} from "../../redux/state";
@@ -13,8 +13,8 @@ type MapStatePropsType = {
     isAuth: boolean
 }
 type MapDispatchPropsType = {
-    updateNewMessageBody: (body:string) => void,
-    sendMessage: () => void
+    // updateNewMessageBody: (body:string) => void,
+    sendMessage: (newMessageBody: string) => void
 }
 
 let mapStateToProps = (state: AppStateType): MapStatePropsType => {
@@ -26,11 +26,11 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
 
 let mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
     return {
-        updateNewMessageBody: (body:string) => {
-            dispatch(updateNewMessageBodyActionCreator(body))
-        },
-        sendMessage: () => {
-            dispatch(sendMessageActionCreator())
+        // updateNewMessageBody: (body:string) => {
+        //     dispatch(updateNewMessageBodyActionCreator(body))
+        // },
+        sendMessage: (newMessageBody: string) => {
+            dispatch(sendMessageActionCreator(newMessageBody))
         }
     }
 }

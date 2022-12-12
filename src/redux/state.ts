@@ -32,7 +32,7 @@ export type ProfilePageType = {
 export type DialogsPageType = {
     messages: Array<MessagesObjType>
     dialogs: Array<DialogsObjType>
-    newMessageBody: string
+    // newMessageBody: string
 }
 
 export type SideBarType = {}
