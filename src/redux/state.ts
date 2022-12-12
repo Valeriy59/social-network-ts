@@ -1,5 +1,5 @@
-import {AddPostActionType, profileReducer, ProfileUserType, UpdateNewPostTextActionType} from "./profile-reducer";
-import {dialogsReducer, SendMessageActionType, UpdateNewMessageBodyActionType} from "./dialogs-reducer";
+import {AddPostActionType, profileReducer, ProfileUserType} from "./profile-reducer";
+import {dialogsReducer, SendMessageActionType} from "./dialogs-reducer";
 import {sideBarReducer} from "./sidebar-reducer";
 
 let rerenderEntireTree = () => {
@@ -43,7 +43,7 @@ export type RootStateType = {
     sidebar: SideBarType
 }
 
-export type ActionsTypes = AddPostActionType | UpdateNewPostTextActionType | UpdateNewMessageBodyActionType | SendMessageActionType
+export type ActionsTypes = AddPostActionType | SendMessageActionType
 
 //Все функции и данные упаковываем в один объект (ООП)
 

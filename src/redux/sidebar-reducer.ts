@@ -1,5 +1,5 @@
 import {SideBarType} from "./state";
-import {AddPostActionType, UpdateNewPostTextActionType} from "./profile-reducer";
+import {AddPostActionType} from "./profile-reducer";
 
 let initialState: SideBarType = {
 

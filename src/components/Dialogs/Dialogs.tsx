@@ -1,17 +1,18 @@
-import React, {ChangeEvent, ChangeEventHandler} from 'react';
+import React from 'react';
 import s from './Dialogs.module.css'
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-import {DialogsPageType, StoreType} from "../../redux/state";
-import {sendMessageActionCreator, updateNewMessageBodyActionCreator} from "../../redux/dialogs-reducer";
+import {DialogsPageType} from "../../redux/state";
 import {Redirect} from "react-router-dom";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
+import {Textarea} from "../Common/FormControls/FormsControls";
+import {maxLengthCreator, required} from "../../utils/validations/validators";
 
 //  Компонента для диалогов, затем импортируется в  App
 
 type DialogsPropsType = {
     sendMessage: (message: string) => void
-    updateNewMessageBody: (body: string) => void
+    // updateNewMessageBody: (body: string) => void
     dialogsPage: DialogsPageType
     isAuth: boolean
 }
@@ -28,7 +29,7 @@ const Dialogs = (props: DialogsPropsType) => {
     //     let body = e.target.value
     //     props.updateNewMessageBody(body)
     // }
-    let addNewMessage = (values) => {
+    let addNewMessage = (values: AddMessageFormDataType) => {
         props.sendMessage(values.newMessageBody)
     }
     if (!props.isAuth) {
@@ -47,14 +48,21 @@ const Dialogs = (props: DialogsPropsType) => {
     )
 }
 
-type FormDataType = {
-
+type AddMessageFormDataType = {
+    newMessageBody: string
 }
-const AddMessageForm : React.FC<InjectedFormProps<FormDataType>> = (props) => {
+
+const maxLength50 = maxLengthCreator(50)
+
+const AddMessageForm : React.FC<InjectedFormProps<AddMessageFormDataType>> = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field component={'textarea'} name={'newMessageBody'} placeholder={'Enter your message'}/>
+                <Field component={Textarea}
+                       name={'newMessageBody'}
+                       placeholder={'Enter your message'}
+                       validate={[required,maxLength50]}
+                />
             </div>
             <div>
                 <button>Send</button>
@@ -63,6 +71,6 @@ const AddMessageForm : React.FC<InjectedFormProps<FormDataType>> = (props) => {
     )
 }
 
-const AddMessageFromRedux = reduxForm<FormDataType>({form: 'dialogAddMessageForm'})(AddMessageForm)
+const AddMessageFromRedux = reduxForm<AddMessageFormDataType>({form: 'dialogAddMessageForm'})(AddMessageForm)
 
 export default Dialogs

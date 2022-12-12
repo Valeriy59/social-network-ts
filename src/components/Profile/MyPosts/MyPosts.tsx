@@ -3,6 +3,8 @@ import Post from './Post/Post';
 import s from './MyPosts.module.css'
 import {PostObjType} from "../../../redux/state";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
+import {maxLengthCreator, required} from "../../../utils/validations/validators";
+import {Textarea} from "../../Common/FormControls/FormsControls";
 
 
 //  Компонента для профиля, затем импортируется в  App
@@ -20,10 +22,8 @@ const MyPosts = (props: MyPostsPropsType) => {
     let newPostElement = React.createRef<HTMLTextAreaElement>()
 
     //это колбэк функция она отдается кнопке на событие онклик, а онклик ее вызовет
-    let onAddPost = (values) => {
-        if (newPostElement.current) {
+    let onAddPost = (values: AddNewPostFormDataType) => {
             props.addPost(values.newPostText)
-        }
     }
 
     // let onPostChange = () => {
@@ -43,14 +43,17 @@ const MyPosts = (props: MyPostsPropsType) => {
     )
 }
 
-type FormDataType = {
-
+type AddNewPostFormDataType = {
+    newPostText: string
 }
-const AddNewPostForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
+
+const maxLength10 = maxLengthCreator(10)
+
+const AddNewPostForm: React.FC<InjectedFormProps<AddNewPostFormDataType>> = (props) => {
     return(
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field name={'newPostText'} component={'textarea'}/>
+                <Field name={'newPostText'} component={Textarea} validate={[required, maxLength10]}/>
             </div>
             <div>
                 <button>Add post</button>
@@ -59,7 +62,7 @@ const AddNewPostForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     )
 }
 
-const AddNewPostFormRedux = reduxForm<FormDataType>({form: 'profileAddNewPostForm'})(AddNewPostForm)
+const AddNewPostFormRedux = reduxForm<AddNewPostFormDataType>({form: 'profileAddNewPostForm'})(AddNewPostForm)
 
 
 export default MyPosts
