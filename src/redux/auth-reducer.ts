@@ -1,5 +1,6 @@
 import {authAPI} from "../api/api";
 import {Dispatch} from "redux";
+import {stopSubmit} from "redux-form";
 
 
 export type SetAuthUserDataActionType = {
@@ -54,10 +55,13 @@ export const setAuthUserData = (userId: number | null, email: string | null, log
 export const getAuthUserData = () => {
     return (dispatch: Dispatch<ActionsTypes>) => {
         authAPI.getAuth()
-            .then(data => {
-                    if (data.resultCode === 0) {
-                        let {id, email, login} = data.data
+            .then(response => {
+                    if (response.data.resultCode === 0) {
+                        let {id, email, login} = response.data.data
                         dispatch(setAuthUserData(id, email, login, true))
+                    } else {
+                        let message = response.messages.length > 0 ? response.messages[0] : "Some error"
+                        dispatch(stopSubmit("login", {_error: message}))
                     }
                 }
             )
