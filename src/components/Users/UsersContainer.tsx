@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import {
-    followTC, getUsersTC,
+    followTC, requestUsersTC,
     setCurrentPage, setFollowingProgress,
     unfollowTC,
     UsersPageType
@@ -55,5 +55,5 @@ let mapStateToProps = (state: StateType): MapStatePropsType => {
 }
 
 export default compose<React.FC>(
-    connect(mapStateToProps, {followTC, unfollowTC, setCurrentPage, setFollowingProgress, getUsersTC})
+    connect(mapStateToProps, {followTC, unfollowTC, setCurrentPage, setFollowingProgress, getUsersTC: requestUsersTC})
 )(UsersContainer)

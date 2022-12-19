@@ -148,10 +148,11 @@ export const setFollowingProgress = (userId: number, followingInProgress: boolea
         userId: userId
     }
 )
-export const getUsersTC = (currentPage: number, pageSize: number) => {
+export const requestUsersTC = (page: number, pageSize: number) => {
     return (dispatch: Dispatch<ActionsTypes>) => {
         dispatch(setIsFetching(true))
-        usersAPI.getUsers(currentPage, pageSize)
+        dispatch(setCurrentPage(page))
+        usersAPI.getUsers(page, pageSize)
             .then(data => {
                 dispatch(setIsFetching(false))
                 dispatch(setUsers(data.items))
