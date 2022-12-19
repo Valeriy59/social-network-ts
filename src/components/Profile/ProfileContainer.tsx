@@ -2,7 +2,7 @@ import React from "react";
 import Profile from "./Profile";
 import {connect} from "react-redux";
 import {getStatus, getUserProfile, ProfileUserType, updateStatus} from "../../redux/profile-reducer";
-import {AppStateType, StateType} from "../../redux/redux-store";
+import {AppStateType} from "../../redux/redux-store";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {compose} from "redux";
 
@@ -29,7 +29,12 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType>{
     // после вмонтирования компонента, отправить запрос на сервер
     componentDidMount() {
         let userId = this.props.match.params.userId
-        if (!userId) { userId = this.props.authorizedUserId.toString()}
+        if (!userId) {
+            userId = this.props.authorizedUserId.toString()
+            if (!userId) {
+                this.props.history.push("/Login")
+            }
+        }
         this.props.getUserProfile(userId)
         this.props.getStatus(userId)
     }
