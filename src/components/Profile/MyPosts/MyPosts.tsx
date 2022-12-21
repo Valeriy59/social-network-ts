@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import Post from './Post/Post';
 import s from './MyPosts.module.css'
 import {PostObjType} from "../../../redux/state";
@@ -16,7 +16,7 @@ type MyPostsPropsType = {
     // updateNewPostText: (text: string) => void
 }
 
-const MyPosts = (props: MyPostsPropsType) => {
+const MyPosts = memo((props: MyPostsPropsType) => {
     let postsElements = props.posts.map(p => <Post key={p.id} message={p.post} likesCount={p.likesCount}/>)
     // создается ссылка
     let newPostElement = React.createRef<HTMLTextAreaElement>()
@@ -41,7 +41,7 @@ const MyPosts = (props: MyPostsPropsType) => {
             </div>
         </div>
     )
-}
+})
 
 type AddNewPostFormDataType = {
     newPostText: string
