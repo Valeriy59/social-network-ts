@@ -1,5 +1,7 @@
 import {usersAPI} from "../api/api";
 import {Dispatch} from "redux";
+import {futimes} from "fs";
+import {updateObjectInArray} from "../utils/object-helpers";
 
 export type FollowActionType = {
     type: "FOLLOW",
@@ -85,9 +87,9 @@ const SET_FOLLOWING_PROGRESS = "SET FOLLOWING PROGRESS"
 export const usersReducer = (state: UsersPageType = initialState, action: ActionsTypes): UsersPageType => {
     switch (action.type) {
         case FOLLOW:
-            return {...state, users: state.users.map(u => u.id === action.id ? {...u, followed: true} : u)}
+            return {...state, users: updateObjectInArray(state.users, action.id, 'id', {followed: true})}
         case UNFOLLOW:
-            return {...state, users: state.users.map(u => u.id === action.id ? {...u, followed: false} : u)}
+            return {...state, users: updateObjectInArray(state.users, action.id, 'id', {followed: false})}
         case SET_USERS:
             return {...state, users: action.users}
         case SET_CURRENT_PAGE:
@@ -148,39 +150,34 @@ export const setFollowingProgress = (userId: number, followingInProgress: boolea
         userId: userId
     }
 )
+
 export const requestUsersTC = (page: number, pageSize: number) => {
-    return (dispatch: Dispatch<ActionsTypes>) => {
+    return async (dispatch: Dispatch<ActionsTypes>) => {
         dispatch(setIsFetching(true))
         dispatch(setCurrentPage(page))
-        usersAPI.getUsers(page, pageSize)
-            .then(data => {
-                dispatch(setIsFetching(false))
-                dispatch(setUsers(data.items))
-                dispatch(setTotalUsersCount(data.totalCount))
-            })
+        let data = await usersAPI.getUsers(page, pageSize)
+        dispatch(setIsFetching(false))
+        dispatch(setUsers(data.items))
+        dispatch(setTotalUsersCount(data.totalCount))
     }
-}  
+}
+
+const followUnfollowFlow = async (dispatch: Dispatch<ActionsTypes>, userId: number, apiMethod: any, actionCreator: any) => {
+    dispatch(setFollowingProgress(userId, true))
+    let data = await apiMethod(userId)
+    if (data.resultCode === 0) {
+        dispatch(actionCreator(userId))
+    }
+    dispatch(setFollowingProgress(userId, false))
+
+}
 export const followTC = (userId: number) => {
-    return (dispatch: Dispatch<ActionsTypes>) => {
-        dispatch(setFollowingProgress(userId,true))
-        usersAPI.follow(userId)
-            .then(data => {
-                if (data.resultCode === 0) {
-                    dispatch(follow(userId))
-                }
-                dispatch(setFollowingProgress(userId,false))
-            })
+    return async (dispatch: Dispatch<ActionsTypes>) => {
+        await followUnfollowFlow(dispatch, userId, usersAPI.follow.bind(usersAPI), follow)
     }
 }
 export const unfollowTC = (userId: number) => {
-    return (dispatch: Dispatch<ActionsTypes>) => {
-        dispatch(setFollowingProgress(userId,true))
-        usersAPI.unfollow(userId)
-            .then(data => {
-                if (data.resultCode === 0) {
-                    dispatch(unfollow(userId))
-                }
-                dispatch(setFollowingProgress(userId,false))
-            })
+    return async (dispatch: Dispatch<ActionsTypes>) => {
+        await followUnfollowFlow(dispatch, userId, usersAPI.unfollow.bind(usersAPI), unfollow)
     }
 }

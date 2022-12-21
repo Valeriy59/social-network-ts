@@ -53,43 +53,37 @@ export const setAuthUserData = (userId: number | null, email: string | null, log
 )
 
 export const getAuthUserData = () => {
-    return (dispatch: Dispatch<ActionsTypes>) => {
-        return authAPI.getAuth()
-            .then(response => {
-                    if (response.data.resultCode === 0) {
-                        let {id, email, login} = response.data.data
-                        dispatch(setAuthUserData(id, email, login, true))
-                    } else {
-                        let message = response.messages.length > 0 ? response.messages[0] : "Some error"
-                        dispatch(stopSubmit("login", {_error: message}))
-                    }
-                }
-            )
+    return async (dispatch: Dispatch<ActionsTypes>) => {
+        let response = await authAPI.getAuth()
+
+        if (response.data.resultCode === 0) {
+            let {id, email, login} = response.data.data
+            dispatch(setAuthUserData(id, email, login, true))
+        }
     }
 }
 
 // Thunk for login
 export const login = (email :string, password: string, rememberMe: boolean) => {
-    return (dispatch: Dispatch<ActionsTypes>) => {
-        authAPI.login(email, password, rememberMe,)
-            .then(response => {
-                    if (response.data.resultCode === 0) {
-                        dispatch(getAuthUserData())
-                    }
-                }
-            )
+    return async (dispatch: Dispatch<ActionsTypes>) => {
+        let response = await authAPI.login(email, password, rememberMe,)
+
+        if (response.data.resultCode === 0) {
+            dispatch(getAuthUserData())
+        } else {
+            let message = response.data.messages.length > 0 ? response.data.messages[0] : "Some error"
+            dispatch(stopSubmit("login", {_error: message}))
+        }
     }
 }
 
 export const logout = () => {
-    return (dispatch: Dispatch<ActionsTypes>) => {
-        authAPI.logout()
-            .then(response => {
-                    if (response.data.resultCode === 0) {
-                        dispatch(setAuthUserData(null, null, null, false))
-                    }
-                }
-            )
+    return async (dispatch: Dispatch<ActionsTypes>) => {
+        let response = await authAPI.logout()
+
+        if (response.data.resultCode === 0) {
+            dispatch(setAuthUserData(null, null, null, false))
+        }
     }
 }
 

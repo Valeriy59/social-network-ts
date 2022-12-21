@@ -163,28 +163,22 @@ export const deletePostActionCreator = (id: number): DeletePostActionType => (
 )
 
 export const getUserProfile = (userId: string) => {
-    return (dispatch: Dispatch<ActionsTypes>) => {
-        usersAPI.getProfile(userId)
-            .then(response => {
-                dispatch(setUserProfile(response.data))
-            })
+    return async (dispatch: Dispatch<ActionsTypes>) => {
+        let response = await usersAPI.getProfile(userId)
+        dispatch(setUserProfile(response.data))
     }
 }
 export const getStatus = (userId: string) => {
-    return (dispatch: Dispatch<ActionsTypes>) => {
-        profileAPI.getStatus(userId)
-            .then(response => {
-                dispatch(setStatus(response.data))
-            })
+    return async (dispatch: Dispatch<ActionsTypes>) => {
+        let response = await profileAPI.getStatus(userId)
+        dispatch(setStatus(response.data))
     }
 }
 export const updateStatus = (status: string) => {
-    return (dispatch: Dispatch<ActionsTypes>) => {
-        profileAPI.updateStatus(status)
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                    dispatch(setStatus(status))
-                }
-            })
+    return async (dispatch: Dispatch<ActionsTypes>) => {
+        let response = await profileAPI.updateStatus(status)
+        if (response.data.resultCode === 0) {
+            dispatch(setStatus(status))
+        }
     }
 }
