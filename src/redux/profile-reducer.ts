@@ -23,6 +23,11 @@ export type AddLikeActionType = {
     id: string
     count: number
 }
+export type DeletePostActionType = {
+    type: "DELETE POST"
+    id: number
+}
+
 
 export type ProfileUserType = {
     aboutMe: string
@@ -46,7 +51,7 @@ export type ProfileUserType = {
     }
 }
 
-type ActionsTypes = AddPostActionType | SetUserProfileActionType | SetStatusActionType | AddLikeActionType
+type ActionsTypes = AddPostActionType | SetUserProfileActionType | SetStatusActionType | AddLikeActionType | DeletePostActionType
 
 let initialState: ProfilePageType = {
     posts: [
@@ -88,6 +93,7 @@ const ADD_POST = "ADD POST"
 const SET_USER_PROFILE = "SET USER PROFILE"
 const SET_STATUS = 'SET STATUS'
 const ADD_LIKE = 'ADD LIKE'
+const DELETE_POST = 'DELETE POST'
 
 export const profileReducer = (state: ProfilePageType = initialState, action: ActionsTypes) => {
     switch (action.type) {
@@ -111,6 +117,9 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
         // case ADD_LIKE: {
         //     return {...state, postData: state.postData.map(el => el.id === action.id ? {...el, likes: action.count} : el)}
         // }
+        case DELETE_POST: {
+            return {...state, posts: [...state.posts.filter(p => p.id !== action.id)]}
+        }
         default:
             return state
     }
@@ -146,6 +155,13 @@ export const addLike = (count: number, id: string): AddLikeActionType => (
         id: id
     }
 )
+export const deletePostActionCreator = (id: number): DeletePostActionType => (
+    {
+        type: DELETE_POST,
+        id: id
+    }
+)
+
 export const getUserProfile = (userId: string) => {
     return (dispatch: Dispatch<ActionsTypes>) => {
         usersAPI.getProfile(userId)
