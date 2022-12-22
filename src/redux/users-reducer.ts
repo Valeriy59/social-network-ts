@@ -63,7 +63,8 @@ export type UsersPageType = {
     totalUsersCount: number,
     currentPage: number,
     isFetching: boolean,
-    followingInProgress: number[]
+    followingInProgress: number[],
+    portionSize: number
 }
 
 let initialState: UsersPageType = {
@@ -72,7 +73,8 @@ let initialState: UsersPageType = {
     totalUsersCount: 1,
     currentPage: 1,
     isFetching: true,
-    followingInProgress: []
+    followingInProgress: [],
+    portionSize: 10
 }
 
 const FOLLOW = "FOLLOW"
