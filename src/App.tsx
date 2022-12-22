@@ -5,9 +5,8 @@ import Music from './components/Music/Music';
 import News from './components/News/News';
 import Settings from './components/Settings/Settings';
 import {BrowserRouter, Route, withRouter} from 'react-router-dom';
-import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/Users/UsersContainer";
-import ProfileContainer from "./components/Profile/ProfileContainer";
+// import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import Login from "./components/Login/Login";
 import {AuthRedirect} from "./hoc/withAuthRedirect";
@@ -16,6 +15,10 @@ import {compose} from "redux";
 import {initializeApp} from "./redux/app-reducer";
 import store, {AppStateType} from "./redux/redux-store";
 import Preloader from "./components/Common/Preloader/Preloader";
+import {WithSuspense} from "./hoc/withSuspense";
+
+const DialogsContainer = React.lazy(() => import ("./components/Dialogs/DialogsContainer"))
+const ProfileContainer = React.lazy(() => import ("./components/Header/HeaderContainer"))
 
 type MapDispatchPropsType = {
     initialized: boolean
@@ -35,8 +38,16 @@ class App extends React.Component<MapDispatchPropsType> {
                 <HeaderContainer/>
                 <Nav/>
                 <div className='app-wrapper-content'>
-                    <Route path="/profile/:userId?" render={() => <AuthRedirect><ProfileContainer/></AuthRedirect>}/>
-                    <Route path="/dialogs" render={() => <AuthRedirect><DialogsContainer/></AuthRedirect>}/>
+                    <Route path="/profile/:userId?" render={() => {
+                        return <React.Suspense fallback={<div>Loading...</div>}>
+                            <AuthRedirect><ProfileContainer/></AuthRedirect>
+                        </React.Suspense>
+                    }}/>
+                    <Route path="/dialogs" render={() => {
+                        return <WithSuspense>
+                            <AuthRedirect><DialogsContainer/></AuthRedirect>
+                        </WithSuspense>
+                    }}/>
                     <Route path="/settings" render={() => <Settings/>}/>
                     <Route path="/music" render={() => <Music/>}/>
                     <Route path="/news" render={() => <News/>}/>
