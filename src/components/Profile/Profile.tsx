@@ -11,11 +11,13 @@ const Profile = (props: ProfilePropsType) => {
     return (
         <div className={s.content}>
             <ProfileInfo
+                isOwner={props.isOwner}
                 status={props.status}
                 profile={props.profile}
                 updateStatus={props.updateStatus}
+                savePhoto={props.savePhoto}
             />
-            <MyPostsContainer/>
+            <MyPostsContainer isOwner={props.isOwner} userAvatar={props.profile?.photos.small}/>
         </div>
     )
 }

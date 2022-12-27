@@ -26,7 +26,8 @@ export type ProfilePageType = {
     posts: Array<PostObjType>
     newPostText: string,
     profile: ProfileUserType,
-    status: string
+    status: string,
+    isOwner: boolean
 }
 
 export type DialogsPageType = {

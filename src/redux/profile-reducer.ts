@@ -27,8 +27,14 @@ export type DeletePostActionType = {
     type: "DELETE POST"
     id: number
 }
-
-
+export type SetPhotoSuccessActionType = {
+    type: 'SAVE PHOTO SUCCESS'
+    photos: PhotosType
+}
+export type PhotosType = {
+    small: string | null
+    large: string | null
+};
 export type ProfileUserType = {
     aboutMe: string
     contacts: {
@@ -51,7 +57,12 @@ export type ProfileUserType = {
     }
 }
 
-type ActionsTypes = AddPostActionType | SetUserProfileActionType | SetStatusActionType | AddLikeActionType | DeletePostActionType
+type ActionsTypes = AddPostActionType
+    | SetUserProfileActionType
+    | SetStatusActionType
+    | AddLikeActionType
+    | DeletePostActionType
+    | SetPhotoSuccessActionType
 
 let initialState: ProfilePageType = {
     posts: [
@@ -85,7 +96,8 @@ let initialState: ProfilePageType = {
             large: '',
         },
     },
-    status: ''
+    status: '',
+    isOwner: true
 
 }
 // const UPDATE_NEW_POST_TEXT = "UPDATE NEW POST TEXT"
@@ -94,6 +106,7 @@ const SET_USER_PROFILE = "SET USER PROFILE"
 const SET_STATUS = 'SET STATUS'
 const ADD_LIKE = 'ADD LIKE'
 const DELETE_POST = 'DELETE POST'
+const SAVE_PHOTO_SUCCESS = 'SAVE PHOTO SUCCESS'
 
 export const profileReducer = (state: ProfilePageType = initialState, action: ActionsTypes) => {
     switch (action.type) {
@@ -119,6 +132,9 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
         // }
         case DELETE_POST: {
             return {...state, posts: [...state.posts.filter(p => p.id !== action.id)]}
+        }
+        case SAVE_PHOTO_SUCCESS: {
+            return {...state, profile: { ...state.profile, photos: action.photos }}
         }
         default:
             return state
@@ -161,6 +177,12 @@ export const deletePostActionCreator = (id: number): DeletePostActionType => (
         id: id
     }
 )
+export const setPhotoSuccess = (photos: PhotosType): SetPhotoSuccessActionType => (
+    {
+        type: SAVE_PHOTO_SUCCESS,
+        photos: photos
+    }
+)
 
 export const getUserProfile = (userId: string) => {
     return async (dispatch: Dispatch<ActionsTypes>) => {
@@ -182,3 +204,16 @@ export const updateStatus = (status: string) => {
         }
     }
 }
+export const savePhoto = (photoFile: File) => {
+    return async (dispatch: Dispatch<ActionsTypes>) => {
+        try {
+            const response = await profileAPI.savePhoto(photoFile);
+
+            if (response.resultCode === 0) {
+                dispatch(setPhotoSuccess(response.data.photos));
+            }
+        } catch (error) {
+            console.log(`Error save avatar. ${error}`);
+        }
+    };
+};
