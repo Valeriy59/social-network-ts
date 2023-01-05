@@ -2,7 +2,7 @@
   "name": "social-network-ts",
   "version": "0.1.0",
   "private": true,
-  "homepage": "",
+  "homepage": "https://github.com/Valeriy59/social-network",
   "dependencies": {
     "@material-ui/core": "^4.12.4",
     "@material-ui/icons": "^4.11.3",
