@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/Valeriy59/social-network/static/css/main.e215ff49.css",
+    "main.js": "/Valeriy59/social-network/static/js/main.25705cc7.js",
+    "static/css/333.cf31b76f.chunk.css": "/Valeriy59/social-network/static/css/333.cf31b76f.chunk.css",
+    "static/js/333.427435af.chunk.js": "/Valeriy59/social-network/static/js/333.427435af.chunk.js",
+    "static/js/114.085869bb.chunk.js": "/Valeriy59/social-network/static/js/114.085869bb.chunk.js",
+    "static/media/loading.gif": "/Valeriy59/social-network/static/media/loading.07a3b34f019158f7439b.gif",
+    "static/media/img.jpg": "/Valeriy59/social-network/static/media/img.32f0910a1fc0f4b5228f.jpg",
+    "index.html": "/Valeriy59/social-network/index.html",
+    "main.e215ff49.css.map": "/Valeriy59/social-network/static/css/main.e215ff49.css.map",
+    "main.25705cc7.js.map": "/Valeriy59/social-network/static/js/main.25705cc7.js.map",
+    "333.cf31b76f.chunk.css.map": "/Valeriy59/social-network/static/css/333.cf31b76f.chunk.css.map",
+    "333.427435af.chunk.js.map": "/Valeriy59/social-network/static/js/333.427435af.chunk.js.map",
+    "114.085869bb.chunk.js.map": "/Valeriy59/social-network/static/js/114.085869bb.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e215ff49.css",
+    "static/js/main.25705cc7.js"
+  ]
+}
