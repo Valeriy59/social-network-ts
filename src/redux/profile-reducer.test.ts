@@ -31,7 +31,9 @@ beforeEach(() => {
                 large: '',
             },
         },
-        status: ''
+        status: '',
+        profileErrorMessage: '',
+        isOwner: true
 
     }
 });

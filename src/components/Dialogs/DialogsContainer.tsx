@@ -3,7 +3,7 @@ import {sendMessageActionCreator} from "../../redux/dialogs-reducer";
 import Dialogs from "./Dialogs";
 import {Dispatch} from "redux";
 import {connect} from "react-redux";
-import {AppStateType} from "../../redux/redux-store";
+import {AppReduxStoreType} from "../../redux/redux-store";
 import {DialogsPageType} from "../../redux/state";
 
 
@@ -17,7 +17,7 @@ type MapDispatchPropsType = {
     sendMessage: (newMessageBody: string) => void
 }
 
-let mapStateToProps = (state: AppStateType): MapStatePropsType => {
+let mapStateToProps = (state: AppReduxStoreType): MapStatePropsType => {
     return {
         dialogsPage: state.dialogsPage,
         isAuth: state.auth.isAuth

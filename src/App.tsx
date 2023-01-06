@@ -6,16 +6,15 @@ import News from './components/News/News';
 import Settings from './components/Settings/Settings';
 import {BrowserRouter, Route, withRouter} from 'react-router-dom';
 import UsersContainer from "./components/Users/UsersContainer";
-// import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
-import Login from "./components/Login/Login";
 import {AuthRedirect} from "./hoc/withAuthRedirect";
 import {connect, Provider} from "react-redux";
 import {compose} from "redux";
 import {initializeApp} from "./redux/app-reducer";
-import store, {AppStateType} from "./redux/redux-store";
+import store, {AppReduxStoreType} from "./redux/redux-store";
 import Preloader from "./components/Common/Preloader/Preloader";
 import {WithSuspense} from "./hoc/withSuspense";
+import Login from "./components/Login/LoginFormik";
 
 const DialogsContainer = React.lazy(() => import ("./components/Dialogs/DialogsContainer"))
 const ProfileContainer = React.lazy(() => import ("./components/Header/HeaderContainer"))
@@ -59,7 +58,7 @@ class App extends React.Component<MapDispatchPropsType> {
     }
 }
 
-const mapStateToProps = (state: AppStateType) => ({initialized: state.app.initialized})
+const mapStateToProps = (state: AppReduxStoreType) => ({initialized: state.app.initialized})
 
 let AppContainer = compose<React.FC>(
     withRouter,

@@ -1,4 +1,4 @@
-import {AddPostActionType, profileReducer, ProfileUserType} from "./profile-reducer";
+import {AddPostActionType, profileReducer, ProfileType} from "./profile-reducer";
 import {dialogsReducer, SendMessageActionType} from "./dialogs-reducer";
 import {sideBarReducer} from "./sidebar-reducer";
 
@@ -8,7 +8,7 @@ let rerenderEntireTree = () => {
 
 export type PostObjType = {
     id: number
-    post: string | null
+    post: string
     likesCount: number
 }
 
@@ -25,9 +25,10 @@ export type MessagesObjType = {
 export type ProfilePageType = {
     posts: Array<PostObjType>
     newPostText: string,
-    profile: ProfileUserType,
+    profile: ProfileType,
     status: string,
     isOwner: boolean
+    profileErrorMessage: string
 }
 
 export type DialogsPageType = {

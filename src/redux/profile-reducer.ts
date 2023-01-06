@@ -1,6 +1,8 @@
 import {PostObjType, ProfilePageType} from "./state";
 import {Dispatch} from "redux";
 import {profileAPI, usersAPI} from "../api/api";
+import {ProfileFormikType} from "../components/Profile/ProfileInfo/ProfileDataForm";
+import {AppReduxStoreType, AppThunk} from "./redux-store";
 
 export type AddPostActionType = {
     type: "ADD POST"
@@ -12,7 +14,7 @@ export type AddPostActionType = {
 // }
 export type SetUserProfileActionType = {
     type: "SET USER PROFILE"
-    profile: ProfileUserType
+    profile: ProfileType
 }
 export type SetStatusActionType = {
     type: "SET STATUS"
@@ -31,38 +33,48 @@ export type SetPhotoSuccessActionType = {
     type: 'SAVE PHOTO SUCCESS'
     photos: PhotosType
 }
+export type SetProfileErrorActionType = {
+    type: "SET_PROFILE_ERROR",
+    profileErrorMessage: string
+}
+
+export type PostsPropsType = {
+    id: number
+    message: string
+    likesCount: number
+}
 export type PhotosType = {
     small: string | null
     large: string | null
 };
-export type ProfileUserType = {
-    aboutMe: string
-    contacts: {
-        facebook: string
-        website: string
-        vk: string
-        twitter: string
-        instagram: string
-        youtube: string
-        github: string
-        mainLink: string
-    },
-    lookingForAJob: boolean
-    lookingForAJobDescription: string
-    fullName: string
-    userId: number
-    photos: {
-        small: string
-        large: string
-    }
+export type ContactsType = {
+    [key: string]: string | undefined
+    facebook?: string
+    website?: string
+    vk?: string
+    twitter?: string
+    instagram?: string
+    youtube?: string
+    github?: string
+    mainLink?: string
+}
+export type ProfileType = {
+    aboutMe?: string
+    contacts?: ContactsType
+    lookingForAJob?: boolean
+    lookingForAJobDescription?: string
+    fullName?: string
+    userId?: number
+    photos?: PhotosType
 }
 
-type ActionsTypes = AddPostActionType
+export type ProfileActionsTypes = AddPostActionType
     | SetUserProfileActionType
     | SetStatusActionType
     | AddLikeActionType
     | DeletePostActionType
     | SetPhotoSuccessActionType
+    | SetProfileErrorActionType
 
 let initialState: ProfilePageType = {
     posts: [
@@ -97,18 +109,19 @@ let initialState: ProfilePageType = {
         },
     },
     status: '',
-    isOwner: true
+    isOwner: true,
+    profileErrorMessage: ""
 
 }
 // const UPDATE_NEW_POST_TEXT = "UPDATE NEW POST TEXT"
 const ADD_POST = "ADD POST"
 const SET_USER_PROFILE = "SET USER PROFILE"
 const SET_STATUS = 'SET STATUS'
-const ADD_LIKE = 'ADD LIKE'
+const SET_PROFILE_ERROR = "SET_PROFILE_ERROR"
 const DELETE_POST = 'DELETE POST'
 const SAVE_PHOTO_SUCCESS = 'SAVE PHOTO SUCCESS'
 
-export const profileReducer = (state: ProfilePageType = initialState, action: ActionsTypes) => {
+export const profileReducer = (state: ProfilePageType = initialState, action: ProfileActionsTypes) => {
     switch (action.type) {
         case ADD_POST: {
             let newPost: PostObjType =
@@ -119,23 +132,19 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
                 }
             return {...state, posts: [...state.posts, newPost], newPostText: ''}
         }
-        // case UPDATE_NEW_POST_TEXT: {
-        //     return {...state, newPostText: action.newText}
-        // }
         case SET_USER_PROFILE: {
             return {...state, profile: action.profile}
         }
         case SET_STATUS:
             return {...state, status: action.status}
-        // case ADD_LIKE: {
-        //     return {...state, postData: state.postData.map(el => el.id === action.id ? {...el, likes: action.count} : el)}
-        // }
         case DELETE_POST: {
             return {...state, posts: [...state.posts.filter(p => p.id !== action.id)]}
         }
         case SAVE_PHOTO_SUCCESS: {
             return {...state, profile: { ...state.profile, photos: action.photos }}
         }
+        case SET_PROFILE_ERROR:
+            return {...state, profileErrorMessage: action.profileErrorMessage}
         default:
             return state
     }
@@ -146,13 +155,8 @@ export const addPostActionCreator = (postText: string): AddPostActionType => (
         postText: postText
     }
 )
-// export const updateNewPostTextActionCreator = (newText: string): UpdateNewPostTextActionType => (
-//     {
-//         type: UPDATE_NEW_POST_TEXT,
-//         newText: newText
-//     }
-// )
-export const setUserProfile = (profile: ProfileUserType): SetUserProfileActionType => (
+
+export const setUserProfile = (profile: ProfileType): SetUserProfileActionType => (
     {
         type: SET_USER_PROFILE,
         profile: profile
@@ -164,13 +168,13 @@ export const setStatus = (status: string): SetStatusActionType => (
         status: status
     }
 )
-export const addLike = (count: number, id: string): AddLikeActionType => (
+export const setProfileError = (profileErrorMessage: string): SetProfileErrorActionType => (
     {
-        type: ADD_LIKE,
-        count: count,
-        id: id
+    type: SET_PROFILE_ERROR,
+    profileErrorMessage
     }
 )
+
 export const deletePostActionCreator = (id: number): DeletePostActionType => (
     {
         type: DELETE_POST,
@@ -184,28 +188,33 @@ export const setPhotoSuccess = (photos: PhotosType): SetPhotoSuccessActionType =
     }
 )
 
-export const getUserProfile = (userId: string) => {
-    return async (dispatch: Dispatch<ActionsTypes>) => {
-        let response = await usersAPI.getProfile(userId)
-        dispatch(setUserProfile(response.data))
+export const getUserProfile = (userId: number): AppThunk => {
+    return async (dispatch) => {
+        let response = await profileAPI.getProfile(userId)
+        dispatch(setUserProfile(response))
     }
 }
-export const getStatus = (userId: string) => {
-    return async (dispatch: Dispatch<ActionsTypes>) => {
+export const getStatus = (userId: string): AppThunk => {
+    return async (dispatch) => {
         let response = await profileAPI.getStatus(userId)
-        dispatch(setStatus(response.data))
+        dispatch(setStatus(response))
     }
 }
-export const updateStatus = (status: string) => {
-    return async (dispatch: Dispatch<ActionsTypes>) => {
-        let response = await profileAPI.updateStatus(status)
-        if (response.data.resultCode === 0) {
-            dispatch(setStatus(status))
+export const updateStatus = (status: string): AppThunk => {
+    return async (dispatch) => {
+        try {
+            let response = await profileAPI.updateStatus(status)
+            if (response.resultCode === 0) {
+                dispatch(setStatus(status))
+            }
+        }
+        catch (err) {
+            dispatch(setProfileError('Some error occurred'))
         }
     }
 }
-export const savePhoto = (photoFile: File) => {
-    return async (dispatch: Dispatch<ActionsTypes>) => {
+export const savePhoto = (photoFile: File): AppThunk => {
+    return async (dispatch) => {
         try {
             const response = await profileAPI.savePhoto(photoFile);
 
@@ -215,5 +224,16 @@ export const savePhoto = (photoFile: File) => {
         } catch (error) {
             console.log(`Error save avatar. ${error}`);
         }
-    };
-};
+    }
+}
+export const saveProfile = (profile: ProfileFormikType): AppThunk => async (dispatch, getState: () => AppReduxStoreType) => {
+    const userId = getState().auth.userId
+    const data = await profileAPI.saveProfile(profile)
+    if (data.resultCode === 0) {
+        dispatch(getUserProfile(userId!))
+        dispatch(setProfileError(""))
+    } else {
+        let message = data.messages.length > 0 ? data.messages[0] : "Some error"
+        dispatch(setProfileError(message))
+    }
+}
