@@ -108,7 +108,7 @@ export const LoginFormik = (props: PropsType) => {
             <button type="submit">Login</button>
         </form>
     );
-};``
+};
 type MapStateToPropsType = ReturnType<typeof mapStateToProps>
 type MapDispatchToPropsType = {
     login: (email: string, password: string, rememberMe: boolean, captchaUrl: string | null) => void
