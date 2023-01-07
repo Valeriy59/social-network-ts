@@ -5,6 +5,16 @@ import {connect} from "react-redux";
 import {login} from "../../redux/auth-reducer";
 import {Redirect} from "react-router-dom";
 import {AppReduxStoreType} from "../../redux/redux-store";
+import {
+    Button,
+    Checkbox,
+    FormControl,
+    FormControlLabel,
+    FormGroup,
+    FormLabel,
+    Grid,
+    TextField
+} from "@material-ui/core";
 
 type PropsType = {
     onSubmit: (values: LoginValuesType) => void
@@ -54,59 +64,70 @@ export const LoginFormik = (props: PropsType) => {
         },
     });
     return (
-        <form onSubmit={formik.handleSubmit}>
-            <div>
-                <p>To log in get registered
-                    <a href={"https://social-network.samuraijs.com/"}
-                       target={"_blank"} rel="noreferrer"> here
-                    </a>
-                </p>
-                <p>or use common test account credentials:</p>
-                <p>Email: free@samuraijs.com</p>
-                <p>Password: free</p>
-            </div>
-            <div>
-                <input
-                    className={formik.errors.email ? s.error : ""}
-                    placeholder={"email"}
-                    {...formik.getFieldProps("email")}
-                />
-                {formik.touched.email && formik.errors.email &&
-                    <div style={{color: "red"}}>{formik.errors.email}</div>}
-            </div>
-            <div>
-                <input
-                    className={formik.errors.password ? s.error : ""}
-                    placeholder={"password"}
-                    {...formik.getFieldProps("password")}
-                />
-                {formik.touched.password && formik.errors.password &&
-                    <div style={{color: "red"}}>{formik.errors.password}</div>}
-            </div>
-            <div>
-                <label className="checkbox-input">
-                    <input
-                        type={"checkbox"}
-                        checked={formik.values.rememberMe}
-                        {...formik.getFieldProps("rememberMe")}
-                    />
-                    Remember Me
-                </label>
-            </div>
-            <div>
-                {props.captchaUrl && <img alt='captcha' src={props.captchaUrl}/>}
-            </div>
-            <div>
-                {props.captchaUrl && <input
-                    placeholder={"symbols from image"}
-                    {...formik.getFieldProps("captcha")}
-                />}
-            </div>
+        <Grid container justifyContent={'center'}>
+            <Grid item justifyContent={'center'}>
+                <form onSubmit={formik.handleSubmit}>
+                    <FormControl>
+                        <FormLabel>
+                            <div>
+                                <p>To log in get registered
+                                    <a href={"https://social-network.samuraijs.com/"}
+                                       target={"_blank"} rel="noreferrer"> here
+                                    </a>
+                                </p>
+                                <p>or use common test account credentials:</p>
+                                <p>Email: free@samuraijs.com</p>
+                                <p>Password: free</p>
+                            </div>
+                        </FormLabel>
+                        <FormGroup>
+                            <div>
+                                <TextField label="Email" margin="normal"
+                                    className={formik.errors.email ? s.error : ""}
+                                    placeholder={"email"}
+                                    {...formik.getFieldProps("email")}
+                                />
+                                {formik.touched.email && formik.errors.email &&
+                                    <div style={{color: "red"}}>{formik.errors.email}</div>}
+                            </div>
+                            <div>
+                                <TextField type="password" label="Password"
+                                           margin="normal"
+                                    className={formik.errors.password ? s.error : ""}
+                                    placeholder={"password"}
+                                    {...formik.getFieldProps("password")}
+                                />
+                                {formik.touched.password && formik.errors.password &&
+                                    <div style={{color: "red"}}>{formik.errors.password}</div>}
+                            </div>
+                            <div>
+                                <FormControlLabel label={'Remember me'}
+                                                  control={<Checkbox
+                                        checked={formik.values.rememberMe}
+                                        {...formik.getFieldProps("rememberMe")}
+                                                  />}
+                                />
+                            </div>
+                            <div>
+                                {props.captchaUrl && <img alt='captcha' src={props.captchaUrl}/>}
+                            </div>
+                            <div>
+                                {props.captchaUrl && <input
+                                    placeholder={"symbols from image"}
+                                    {...formik.getFieldProps("captcha")}
+                                />}
+                            </div>
 
-            {props.errorMessage && <div className={s.error}>{props.errorMessage}</div>}
+                            {props.errorMessage && <div className={s.error}>{props.errorMessage}</div>}
 
-            <button type="submit">Login</button>
-        </form>
+                            <Button type={'submit'} variant={'contained'} color={'primary'}>
+                                Login
+                            </Button>
+                        </FormGroup>
+                    </FormControl>
+                </form>
+            </Grid>
+        </Grid>
     );
 };
 type MapStateToPropsType = ReturnType<typeof mapStateToProps>
@@ -129,11 +150,15 @@ const Login = (props: LoginPropsType) => {
     if (props.isAuth) {
         return <Redirect to={"/Profile"}/>
     }
-    return <div className={s.loginBlock}>
+    return (
+    <div className={s.container}>
+
+    <div className={s.loginBlock}>
         <h2>Login</h2>
         <LoginFormik onSubmit={onSubmit} errorMessage={props.authErrorMessage}
                      captchaUrl={props.captchaUrl}/>
-    </div>
+    </div></div>
+    )
 }
 
 export default connect(mapStateToProps, {login})(Login)

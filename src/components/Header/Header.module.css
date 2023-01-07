@@ -24,5 +24,7 @@
   background-color: #919191;
 }
 .loginBlock a{
-  color:white;
+  color: #646161;
+  padding-right: 20px;
+  text-decoration: none;
 }

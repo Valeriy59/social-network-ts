@@ -1,10 +1,11 @@
 .dialogs {
     display: flex;
-    justify-content: space-between;
+    /*justify-content: space-around;*/
     border-radius: 10px;
-    width: 60%;
-    background-color: #f5f5f5;
-    padding-left: 150px;
+    width: 90%;
+    background-color: #fff;
+    /*padding-left: 150px;*/
+    /*border: 1px solid black;*/
 }
 .dialogs a {
     color: #13157a;
@@ -16,11 +17,19 @@
     padding: 20px;
     display: flex;
     flex-direction: column;
+    border: 3px solid #fff;
+    background-color: #f5f5f5;
+    box-shadow: 1px 1px 5px rgb(0 0 0 / 20%);
 
 }
 .dialogsItems .active {
     color: rgb(255, 255, 0);
 }
+.dialogF {
+padding-left: 10px;
+    border-radius: 10px;
+}
+
 .dialog {
     padding: 2px;
     box-shadow: 1px 1px 5px rgb(0 0 0 / 20%);
@@ -28,6 +37,7 @@
     border-radius: 10px;
     display: flex;
     align-items: center;
+
 }
 .dialog img {
     width: 40px;
@@ -38,9 +48,11 @@
 .messages {
     overflow: auto;
     height: 400px;
+
 }
 .messages .message {
     background-color: rgb(234, 245, 250);
+
 }
 .field {
     padding: 10px;

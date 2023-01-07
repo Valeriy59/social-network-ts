@@ -17,19 +17,19 @@
     padding: 10px;
     border-radius: 26px 26px 26px 0;
     /*background-image: linear-gradient(45deg, #fff 0%, #f5f4f4 50%, #eeeded 100%);*/
-    background-position: 100% 0;
-    background-color:  #fff;
+    /*background-position: 100% 0;*/
+    background: radial-gradient(circle at 0 0, rgba(30, 42, 39, 0) 15px, #f5f5f5 0);
     font-family: 'Montserrat', sans-serif;
 }
 .angle {
     width: 15px;
     height: 15px;
-    background: radial-gradient(circle at 0 0, rgba(30, 42, 39, 0) 15px, #fff 0);
+    background: radial-gradient(circle at 0 0, rgba(30, 42, 39, 0) 15px, #f5f5f5 0);
 }
 .angleSent {
     width: 15px;
     height: 15px;
-    background: radial-gradient(circle at 100% 0, rgba(30, 42, 39, 0) 15px, #fff   0);
+    background: radial-gradient(circle at 100% 0, rgba(30, 42, 39, 0) 15px, #f5f5f5   0);
 }
 .name {
     font-size: 12px;

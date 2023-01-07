@@ -1,6 +1,6 @@
 import React, {ChangeEvent, useRef, useState} from 'react';
 import s from './ProfileInfo.module.css'
-import userPhoto from "../../../assets/images/img.jpg";
+import userPhoto from "../../../assets/images/img.png";
 import {ProfileType} from "../../../redux/profile-reducer";
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 import {Dispatch} from "redux";
