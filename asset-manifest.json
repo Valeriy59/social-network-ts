@@ -1,25 +1,26 @@
 {
   "files": {
-    "main.css": "/Valeriy59/social-network/static/css/main.e215ff49.css",
-    "main.js": "/Valeriy59/social-network/static/js/main.7f2c7687.js",
-    "static/css/333.cf31b76f.chunk.css": "/Valeriy59/social-network/static/css/333.cf31b76f.chunk.css",
-    "static/js/333.427435af.chunk.js": "/Valeriy59/social-network/static/js/333.427435af.chunk.js",
-    "static/css/630.b8df4b0a.chunk.css": "/Valeriy59/social-network/static/css/630.b8df4b0a.chunk.css",
-    "static/js/630.f7179355.chunk.js": "/Valeriy59/social-network/static/js/630.f7179355.chunk.js",
+    "main.css": "/Valeriy59/social-network/static/css/main.3b38ab04.css",
+    "main.js": "/Valeriy59/social-network/static/js/main.9215d2f5.js",
+    "static/css/492.4656e5ab.chunk.css": "/Valeriy59/social-network/static/css/492.4656e5ab.chunk.css",
+    "static/js/492.8f5e5784.chunk.js": "/Valeriy59/social-network/static/js/492.8f5e5784.chunk.js",
+    "static/css/1.86fd8c48.chunk.css": "/Valeriy59/social-network/static/css/1.86fd8c48.chunk.css",
+    "static/js/1.8c1c7fc3.chunk.js": "/Valeriy59/social-network/static/js/1.8c1c7fc3.chunk.js",
     "static/js/114.085869bb.chunk.js": "/Valeriy59/social-network/static/js/114.085869bb.chunk.js",
     "static/media/loading.gif": "/Valeriy59/social-network/static/media/loading.07a3b34f019158f7439b.gif",
     "static/media/img.jpg": "/Valeriy59/social-network/static/media/img.32f0910a1fc0f4b5228f.jpg",
+    "static/media/img.png": "/Valeriy59/social-network/static/media/img.35863627e059739d8a9d.png",
     "index.html": "/Valeriy59/social-network/index.html",
-    "main.e215ff49.css.map": "/Valeriy59/social-network/static/css/main.e215ff49.css.map",
-    "main.7f2c7687.js.map": "/Valeriy59/social-network/static/js/main.7f2c7687.js.map",
-    "333.cf31b76f.chunk.css.map": "/Valeriy59/social-network/static/css/333.cf31b76f.chunk.css.map",
-    "333.427435af.chunk.js.map": "/Valeriy59/social-network/static/js/333.427435af.chunk.js.map",
-    "630.b8df4b0a.chunk.css.map": "/Valeriy59/social-network/static/css/630.b8df4b0a.chunk.css.map",
-    "630.f7179355.chunk.js.map": "/Valeriy59/social-network/static/js/630.f7179355.chunk.js.map",
+    "main.3b38ab04.css.map": "/Valeriy59/social-network/static/css/main.3b38ab04.css.map",
+    "main.9215d2f5.js.map": "/Valeriy59/social-network/static/js/main.9215d2f5.js.map",
+    "492.4656e5ab.chunk.css.map": "/Valeriy59/social-network/static/css/492.4656e5ab.chunk.css.map",
+    "492.8f5e5784.chunk.js.map": "/Valeriy59/social-network/static/js/492.8f5e5784.chunk.js.map",
+    "1.86fd8c48.chunk.css.map": "/Valeriy59/social-network/static/css/1.86fd8c48.chunk.css.map",
+    "1.8c1c7fc3.chunk.js.map": "/Valeriy59/social-network/static/js/1.8c1c7fc3.chunk.js.map",
     "114.085869bb.chunk.js.map": "/Valeriy59/social-network/static/js/114.085869bb.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.e215ff49.css",
-    "static/js/main.7f2c7687.js"
+    "static/css/main.3b38ab04.css",
+    "static/js/main.9215d2f5.js"
   ]
 }
