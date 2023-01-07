@@ -2,7 +2,7 @@
   "name": "social-network-ts",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://github.com/Valeriy59/social-network",
+  "homepage": "https://valeriy59.github.io/social-network-ts",
   "dependencies": {
     "@material-ui/core": "^4.12.4",
     "@material-ui/icons": "^4.11.3",
@@ -64,6 +64,7 @@
     "@types/react-router-dom": "5.3.3",
     "@types/react-test-renderer": "17.0.1",
     "@types/redux-form": "8.3.3",
-    "@types/uuid": "^8.3.4"
+    "@types/uuid": "^8.3.4",
+    "gh-pages": "^4.0.0"
   }
 }

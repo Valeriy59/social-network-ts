@@ -4,7 +4,7 @@ import Nav from './components/Nav/Nav';
 import Music from './components/Music/Music';
 import News from './components/News/News';
 import Settings from './components/Settings/Settings';
-import {BrowserRouter, Route, Switch, withRouter} from 'react-router-dom';
+import {HashRouter, Route, Switch, withRouter} from 'react-router-dom';
 import UsersContainer from "./components/Users/UsersContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import {AuthRedirect} from "./hoc/withAuthRedirect";
@@ -71,11 +71,11 @@ let AppContainer = compose<React.FC>(
 
 export const MainApp = () => {
     return (
-        <BrowserRouter>
+        <HashRouter>
             <Provider store={store}>
                 <AppContainer/>
             </Provider>
-        </BrowserRouter>
+        </HashRouter>
     )
 }
 
