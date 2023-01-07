@@ -1,51 +1,19 @@
 import React, {memo} from 'react';
 import Post from './Post/Post';
 import s from './MyPosts.module.css'
-import {PostObjType} from "../../../redux/state";
-import {Field, InjectedFormProps, reduxForm} from "redux-form";
-import {maxLengthCreator, required} from "../../../utils/validations/validators";
-import {Textarea} from "../../Common/FormControls/FormsControls";
 import {MyPostsPropsType} from "./MyPostsContainer";
 import {useFormik} from "formik";
 
-
-//  Компонента для профиля, затем импортируется в  App
-
-// type MyPostsPropsType = {
-//     posts: Array<PostObjType>
-//     newPostText: string
-//     addPost: (postText: string) => void
-//     // updateNewPostText: (text: string) => void
-// }
-
 const MyPosts = memo((props: MyPostsPropsType) => {
-    let postsElements = props.posts.map(p => <Post key={p.id} message={p.post} likesCount={p.likesCount}/>)
-    // создается ссылка
-    // let newPostElement = React.createRef<HTMLTextAreaElement>()
-    //
-    // //это колбэк функция она отдается кнопке на событие онклик, а онклик ее вызовет
-    // let onAddPost = (values: AddNewPostFormDataType) => {
-    //         props.addPost(values.newPostText)
-    // }
-
-    // let onPostChange = () => {
-    //     if (newPostElement.current) {
-    //         props.updateNewPostText(newPostElement.current?.value)
-    //     }
-    // }
+    let postsElements = props.posts.map(p => <Post key={p.id} message={p.post} likesCount={p.likesCount} />)
 
     return (
         <div className={s.postsBlock}>
-            <hr/>
             <h3>My posts</h3>
-            <hr/>
+            <div className={s.addPost}>
             <NewPostFormik addPost={props.addPost}/>
-            <div className={s.posts}>New posts</div>
+            </div>
             {postsElements}
-            {/*<AddNewPostFormRedux onSubmit={onAddPost}/>*/}
-            {/*<div className={s.posts}>*/}
-            {/*    {postsElements}*/}
-            {/*</div>*/}
         </div>
     )
 })
@@ -65,7 +33,7 @@ export const NewPostFormik = (props: NewPostFormikPropsType) => {
         validate: values => {
             const errors: FormikErrorType = {}
             if (!values.newPostText){errors.newPostText='Required'}
-            else if (values.newPostText.length>10){errors.newPostText="Max length is 10 symbols"}
+            else if (values.newPostText.length>1000){errors.newPostText="Max length is 1000 symbols"}
             return errors
         },
         onSubmit: values => {
@@ -79,7 +47,7 @@ export const NewPostFormik = (props: NewPostFormikPropsType) => {
             <div>
                 <textarea
                     className = {formik.errors.newPostText? s.error : ''}
-                    placeholder={'Post message'}
+                    placeholder={`What's new?`}
                     {...formik.getFieldProps('newPostText')}
                 />
                 {formik.touched.newPostText && formik.errors.newPostText && <div style={{color:'red'}}>{formik.errors.newPostText}</div>}
@@ -90,26 +58,5 @@ export const NewPostFormik = (props: NewPostFormikPropsType) => {
         </form>
     )
 }
-// type AddNewPostFormDataType = {
-//     newPostText: string
-// }
-//
-// const maxLength10 = maxLengthCreator(10)
-//
-// const AddNewPostForm: React.FC<InjectedFormProps<AddNewPostFormDataType>> = (props) => {
-//     return(
-//         <form onSubmit={props.handleSubmit}>
-//             <div>
-//                 <Field name={'newPostText'} component={Textarea} validate={[required, maxLength10]}/>
-//             </div>
-//             <div>
-//                 <button>Add post</button>
-//             </div>
-//         </form>
-//     )
-// }
-//
-// const AddNewPostFormRedux = reduxForm<AddNewPostFormDataType>({form: 'profileAddNewPostForm'})(AddNewPostForm)
-
 
 export default MyPosts

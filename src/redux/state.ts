@@ -10,16 +10,22 @@ export type PostObjType = {
     id: number
     post: string
     likesCount: number
+
 }
 
 export type DialogsObjType = {
     id: number
     name: string
+    imgSrc: string
 }
 
 export type MessagesObjType = {
     id: number
+    avatar: string
+    name: string
     message: string
+    time: any
+
 }
 
 export type ProfilePageType = {

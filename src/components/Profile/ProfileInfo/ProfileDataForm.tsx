@@ -1,5 +1,5 @@
 import {useFormik} from "formik";
-import s from "../ProfileInfo.module.css"
+import s from "./ProfileInfo.module.css"
 import React from "react";
 import {ContactsType, ProfileType} from "../../../redux/profile-reducer";
 

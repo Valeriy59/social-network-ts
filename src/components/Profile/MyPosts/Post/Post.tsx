@@ -1,17 +1,26 @@
 import React from 'react';
 import classes from './Post.module.css'
+import avatar from "../../../../assets/images/img.png"
 //  Компонента для профиля, затем импортируется в  App
 
 type PostPropsType = {
     message: string,
-    likesCount: number
+    likesCount: number,
+    // userName: string | undefined,
+    // userAvatar: string | null | undefined
 }
 
 const Post = (props: PostPropsType) => {
     return (
         <div className={classes.item}>
-            <img src='https://fun-cats.ru/wp-content/uploads/4/b/2/4b28e906802cf608d7d0f2ac5a90459a.jpeg'></img>
-            {props.message}
+            <div className={classes.avatarAndName}>
+            <img
+                src={avatar}
+                 // src={props.userAvatar !== null ? props.userAvatar : avatar}
+                 alt={'avatar'}/>
+                {/*<h5>{props.userName}</h5>*/}
+            </div>
+            <span className={classes.message}>{props.message}</span>
             <div><span>like</span> {props.likesCount}
             </div>
         </div>

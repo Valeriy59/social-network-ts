@@ -1,10 +1,8 @@
-import React from 'react'
-import styles from "./Users.module.css";
-import userPhoto from "../../assets/images/img.jpg";
+import React from 'react';
 import {followTC, unfollowTC, UsersPageType} from "../../redux/users-reducer";
-import {NavLink} from "react-router-dom";
 import Paginator from "../Common/Paginator/Paginator";
 import User from "./User";
+import styles from "./Users.module.css";
 
 
 
@@ -19,8 +17,10 @@ type UsersPropsType = {
 const Users = (props: UsersPropsType) => {
     let state = props.usersPage
     return (
-        <div>
+        <div className={styles.usersPage}>
+            <div className={styles.paginator}>
             <Paginator usersPage={props.usersPage} onPageChanged={props.onPageChanged} />
+            </div>
             {
                 state.users.map(u => <User key={u.id}
                                            user={u}

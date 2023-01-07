@@ -1,6 +1,43 @@
 .postsBlock {
   padding: 10px;
+  border-radius: 10px;
 }
 .posts {
   margin-top: 10px;
+}
+
+button {
+  color: white;
+  border-radius: 2px;
+  letter-spacing: 1px;
+  background-color: #919191;
+  border: none;
+}
+
+button:hover {
+  background-position: right center;
+  transform: scale(1.02);
+  cursor: pointer;
+}
+/*.item {*/
+/*  color: blue;*/
+/*}*/
+.posts {
+  margin-top: 10px;
+}
+.error {
+  outline: none;
+  border: 2px solid red;
+}
+textarea {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 2px 5px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 1px 1px 5px rgb(0 0 0 / 20%);
+  width: 80%;
+  font-size: 14px;
+  transition: .5s;
 }

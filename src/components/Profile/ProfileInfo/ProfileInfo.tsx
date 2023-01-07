@@ -45,16 +45,19 @@ const ProfileInfo = (props: ProfilePropsType) => {
         <div className={s.descriptionBlock}>
             <div className={s.profile}>
                 <img src={props.profile.photos?.large !== null ? props.profile.photos?.large : userPhoto}
+                     onClick={selectFileHandler}
                      className={s.mainPhoto}/>
+                <div className={s.profileDetails}>
                 {
                     props.isOwner &&
-                    <div>
-                        <button onClick={selectFileHandler}>upload file</button>
-                        <input style={{display: "none"}}
+                    <div >
+                        <div>{props.profile.fullName}</div>
+                        {/*<button onClick={selectFileHandler}>upload file</button>*/}
+                        <div><input style={{display: "none"}}
                                ref={inputRef}
                                type={"file"}
                                onChange={onMainPhotoSelected}
-                        />
+                        /></div>
                     </div>
                 }
 
@@ -62,6 +65,7 @@ const ProfileInfo = (props: ProfilePropsType) => {
                     status={props.status}
                     updateUserStatus={props.updateStatus}
                 />
+                </div>
             </div>
             <div className={s.profileInfo}>
                 {
@@ -85,9 +89,10 @@ type ContactPropsType = {
     contactValue: string | undefined
 }
 export const Contact = ({contactTitle, contactValue}: ContactPropsType) => {
-    return <div className={s.contacts}>
+    return (
+    <div className={s.contacts}>
         <li><b>{contactTitle}</b>: {contactValue}</li>
-    </div>
+    </div>)
 }
 
 type ProfileDataType = {
@@ -113,7 +118,7 @@ const ProfileData = ({profile, isOwner, goToEditMode, errorMessage}: ProfileData
             <b>About me</b>: {profile.aboutMe}
         </div>
         <div>
-            <b>Contacts</b>: {profile.contacts && Object.keys(profile.contacts).map(key => {
+            <b>Contacts</b>: {profile.contacts?.facebook && Object.keys(profile.contacts).map(key => {
             return <Contact key={key} contactTitle={key}
                             contactValue={profile.contacts && profile.contacts[key]}/>
         })}

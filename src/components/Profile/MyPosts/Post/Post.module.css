@@ -1,7 +1,15 @@
 .item {
   color: black;
+  padding-left: 10px;
+  padding-top: 25px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 1px 1px 5px rgb(0 0 0 / 20%);
+  width: 80%;
+  margin-top: 20px;
 }
 .item img {
   width: 50px;
-  border-radius: 30%;
+  height: 50px;
+  border-radius: 15px;
 }

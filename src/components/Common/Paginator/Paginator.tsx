@@ -37,7 +37,7 @@ const Paginator: React.FC<PaginatorPropsType> = ({usersPage, onPageChanged,  ...
                                      state.currentPage === p ? styles.selectedPage : ''}
                                  onClick={() => {
                                      onPageChanged(p)
-                                 }}>{p}
+                                 }}>  {p}
                     </span>
                 })}
             {portionCount > portionNumber &&

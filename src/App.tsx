@@ -4,7 +4,7 @@ import Nav from './components/Nav/Nav';
 import Music from './components/Music/Music';
 import News from './components/News/News';
 import Settings from './components/Settings/Settings';
-import {BrowserRouter, Route, withRouter} from 'react-router-dom';
+import {BrowserRouter, Route, Switch, withRouter} from 'react-router-dom';
 import UsersContainer from "./components/Users/UsersContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import {AuthRedirect} from "./hoc/withAuthRedirect";
@@ -17,7 +17,7 @@ import {WithSuspense} from "./hoc/withSuspense";
 import Login from "./components/Login/LoginFormik";
 
 const DialogsContainer = React.lazy(() => import ("./components/Dialogs/DialogsContainer"))
-const ProfileContainer = React.lazy(() => import ("./components/Header/HeaderContainer"))
+const ProfileContainer = React.lazy(() => import ("./components/Profile/ProfileContainer"))
 
 type MapDispatchPropsType = {
     initialized: boolean
@@ -33,10 +33,13 @@ class App extends React.Component<MapDispatchPropsType> {
             return <Preloader/>
         }
         return (
+            <div className='app'>
+
             <div className='app-wrapper'>
                 <HeaderContainer/>
                 <Nav/>
                 <div className='app-wrapper-content'>
+                    <Switch>
                     <Route path="/profile/:userId?" render={() => {
                         return <React.Suspense fallback={<div>Loading...</div>}>
                             <AuthRedirect><ProfileContainer/></AuthRedirect>
@@ -51,8 +54,10 @@ class App extends React.Component<MapDispatchPropsType> {
                     <Route path="/music" render={() => <Music/>}/>
                     <Route path="/news" render={() => <News/>}/>
                     <Route path="/users" render={() => <AuthRedirect><UsersContainer/></AuthRedirect>}/>
-                    <Route path="/login" render={() => <Login/>}/>
-                </div>
+                    <Route path="/login" render={() => <WithSuspense children={<Login/>}/>}/>
+                    </Switch>
+                    </div>
+            </div>
             </div>
         )
     }

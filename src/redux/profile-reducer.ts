@@ -42,6 +42,7 @@ export type PostsPropsType = {
     id: number
     message: string
     likesCount: number
+
 }
 export type PhotosType = {
     small: string | null
@@ -50,13 +51,13 @@ export type PhotosType = {
 export type ContactsType = {
     [key: string]: string | undefined
     facebook?: string
-    website?: string
-    vk?: string
-    twitter?: string
+    // website?: string
+    // vk?: string
+    // twitter?: string
     instagram?: string
-    youtube?: string
+    // youtube?: string
     github?: string
-    mainLink?: string
+    // mainLink?: string
 }
 export type ProfileType = {
     aboutMe?: string
@@ -81,23 +82,20 @@ let initialState: ProfilePageType = {
         {id: 1, post: 'Hi, how are you?', likesCount: 12},
         {id: 2, post: "It's my first post", likesCount: 11},
         {id: 3, post: 'How are you?', likesCount: 10},
-        {id: 4, post: 'yo', likesCount: 14},
-        {id: 5, post: 'yo', likesCount: 19},
-        {id: 6, post: 'yo', likesCount: 10},
-        {id: 7, post: '324f', likesCount: 24}
+        {id: 4, post: 'yo', likesCount: 14}
     ],
     newPostText: 'it-kamasutra',
     profile: {
         aboutMe: '',
         contacts: {
             facebook: '',
-            website: '',
-            vk: '',
-            twitter: '',
+            // website: '',
+            // vk: '',
+            // twitter: '',
             instagram: '',
-            youtube: '',
+            // youtube: '',
             github: '',
-            mainLink: '',
+            // mainLink: '',
         },
         lookingForAJob: false,
         lookingForAJobDescription: '',
