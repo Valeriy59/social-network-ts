@@ -52,12 +52,6 @@ const Dialogs = (props: DialogsPropsType) => {
                     <AddMessageFromRedux onSubmit={addNewMessage}/>
                 </div>
             </div>
-            <div/>
-            {/*<div className={s.messages}>*/}
-            {/*    <div>{messagesElements}</div>*/}
-            {/*<div>*/}
-            {/*    <AddMessageFromRedux onSubmit={addNewMessage}/>*/}
-            {/*</div>*/}
         </div>
     )
 }

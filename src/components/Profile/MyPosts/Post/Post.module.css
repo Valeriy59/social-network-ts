@@ -13,3 +13,8 @@
   height: 50px;
   border-radius: 15px;
 }
+.likes {
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+}
