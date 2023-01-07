@@ -129,8 +129,8 @@ const Login = (props: LoginPropsType) => {
     if (props.isAuth) {
         return <Redirect to={"/Profile"}/>
     }
-    return <div>
-        <h2>Log In</h2>
+    return <div className={s.loginBlock}>
+        <h2>Login</h2>
         <LoginFormik onSubmit={onSubmit} errorMessage={props.authErrorMessage}
                      captchaUrl={props.captchaUrl}/>
     </div>

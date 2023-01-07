@@ -33,7 +33,7 @@ class App extends React.Component<MapDispatchPropsType> {
             return <Preloader/>
         }
         return (
-            <div className='app'>
+            // <div className='app'>
 
             <div className='app-wrapper'>
                 <HeaderContainer/>
@@ -58,7 +58,7 @@ class App extends React.Component<MapDispatchPropsType> {
                     </Switch>
                     </div>
             </div>
-            </div>
+            // </div>
         )
     }
 }

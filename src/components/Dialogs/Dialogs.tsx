@@ -42,12 +42,8 @@ const Dialogs = (props: DialogsPropsType) => {
             <div className={s.dialogsItems}>
                 {dialogsElements}
             </div>
-            <div className={s.dialogF} style={{
-                overflow: "auto",
-                height: "500px",
-                WebkitOverflowScrolling: "touch"
-            }}>{messagesElements}
-                <div ref={scroll}/>
+            <div className={s.dialogF} >{messagesElements}
+                {/*<div ref={scroll}/>*/}
                 <div>
                     <AddMessageFromRedux onSubmit={addNewMessage}/>
                 </div>
@@ -66,7 +62,7 @@ const AddMessageForm: React.FC<InjectedFormProps<AddMessageFormDataType>> = (pro
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field component={Textarea}
+                <Field className={s.field} component={Textarea}
                        name={'newMessageBody'}
                        placeholder={'Enter your message'}
                        validate={[required, maxLength50]}
