@@ -5,4 +5,4 @@ The biggest project that represents all the skills needed to be a great React de
 
 ## github-pages
 
-https://github.com/Valeriy59/social-network
+https://valeriy59.github.io/social-network-ts/#/
